@@ -4,7 +4,7 @@ TP GRUPAL PYGAME
 Intregrantes: Nicolás Doyhenart, Santino Fernandez
 """""
 import pygame
-from especificas import *
+from especificas_eventos import *
 
 BLANCO = (255, 255, 255)
 NEGRO = (0, 0, 0)

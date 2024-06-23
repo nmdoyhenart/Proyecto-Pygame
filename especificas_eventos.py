@@ -1,3 +1,8 @@
+"""""
+TP GRUPAL PYGAME
+
+Intregrantes: Nicolás Doyhenart, Santino Fernandez
+"""""
 import pygame
 
 def efecto_de_sonido():
