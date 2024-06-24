@@ -4,7 +4,9 @@ TP GRUPAL PYGAME
 Intregrantes: Nicolás Doyhenart, Santino Fernandez
 """""
 import pygame
-from especificas_eventos import *
+from evento2 import *
+from especificas import *
+from modulo_puntos import *
 
 BLANCO = (255, 255, 255)
 NEGRO = (0, 0, 0)
@@ -12,10 +14,15 @@ AZUL = (0, 0, 255)
 AZUL_CLARO = (128, 191, 255)
 GRIS = (200, 200, 200)
 ROJO = (255, 0, 0)
-ROJO_CLARO = (255, 150, )
+ROJO_CLARO = (255, 150, 136)
 
-ANCHO_VENTANA = 800
-ALTO_VENTANA = 600
+tupla = (ROJO, AZUL)
+
+PUNTOS = [50, 100, 200, 250, 300, 400, 500, 600, 750, 1000]
+
+
+ANCHO_VENTANA = 700
+ALTO_VENTANA = 900
 
 VENTANA1 = (ANCHO_VENTANA, ALTO_VENTANA)
 
@@ -24,22 +31,27 @@ pygame.init()
 ventana = pygame.display.set_mode(VENTANA1)
 pygame.display.set_caption("Tot or trivia")
 
-icono = pygame.image.load(r"TP-PYGAME-COLLAB/recursos/logo.jpg")
+icono = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\logo.jpg")
 pygame.display.set_icon(icono)
 
-fondo = pygame.image.load(r"TP-PYGAME-COLLAB\recursos\fondo.jpg")
+fondo = pygame.image.load(r"TP-PYGAME-COLLAB-main/recursos/fondo.jpg")
 fondo = pygame.transform.scale(fondo, VENTANA1)
 
-tribuna = pygame.image.load(r"TP-PYGAME-COLLAB\recursos\tribuna.jpg")
-tribuna = pygame.transform.scale(tribuna, (500, 300))
+jueces = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\guampa.png")
+jueces = pygame.transform.scale(jueces, (100, 140))
 
-moneda = pygame.image.load(r"TP-PYGAME-COLLAB\recursos\moneda.png")
-moneda = pygame.transform.scale(moneda, (500, 300))
+tribuna = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\tribuna transparente.png")
+tribuna = pygame.transform.scale(tribuna, (750, 600))
+
+decision = decision_aux(tupla)
+
+moneda = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\moneda.png")
+moneda = pygame.transform.scale(moneda, (40, 30))
 
 fuente = pygame.font.Font(None, 36)
 
-monedas = pygame.Rect(700, 100, 250, 30)
-input = pygame.Rect(210, 400, 120, 90)
+monedas = pygame.Rect(ANCHO_VENTANA - 100, 80, 100, 30)
+input = pygame.Rect(180, 650, 150, 90)
 
 color = ROJO
 color_inactivo = AZUL
@@ -49,6 +61,7 @@ activo = False
 texto = ""
 
 bandera = True
+monedas_base = 0
 while bandera:
     for evento in pygame.event.get():
         if evento.type == pygame.QUIT:
@@ -57,22 +70,45 @@ while bandera:
             if input.collidepoint(evento.pos):
                 efecto_de_sonido()
                 activo = not activo
-            color = color_activo if activo else color_inactivo
-    
-    ventana.blit(fondo, (0, 0))
-    ventana.blit(tribuna, (150, 80))
-    # ventana.blit(moneda, (150, 80))
+                monedas_base = monedas_incrementales(PUNTOS, monedas_base)
 
+
+            if activo:
+                color = color_activo
+            else:
+                color = color_inactivo
+    
+    ventana.blit(fondo, (0, 0))    
+    ventana.blit(tribuna, (0, 0))
+
+
+
+    x = 100
+    for i in range(10):
+        decisiones = pygame.Rect(x+30 ,360, 40, 40)
+        pygame.draw.rect(ventana, decision, decisiones)
+
+        #ventana.blit(decisiones, (x, 330))
+        ventana.blit(jueces, (x, 300))
+
+
+        x += 100
+        if x >= 600:
+            x = 100
+
+
+    #pygame.draw.rect(ventana, NEGRO, monedas)
+    #Todo lo relacionado con el button de this or that
     texto_superficie = fuente.render("This or that", True, BLANCO)
-    texto_monedas = fuente.render("0", True, BLANCO)
-    
     pygame.draw.rect(ventana, color, input)
-    pygame.draw.rect(ventana, NEGRO, monedas)
-
     ventana.blit(texto_superficie, (input.x + 5, input.y + 5))
-    ventana.blit(texto_monedas, (monedas.x + 5, monedas.y + 5))
     pygame.draw.rect(ventana, color, input, 2)
-    pygame.draw.rect(ventana, color, monedas, 2)
+
+    #Todo lo relacionado con el contador d monedas
+    texto_monedas = fuente.render(str(monedas_base), True, BLANCO)
+    pygame.draw.rect(ventana, NEGRO, monedas, 0)
+    ventana.blit(texto_monedas, (monedas.x , monedas.y ))
+    ventana.blit(moneda, (ANCHO_VENTANA - 35, 80))
     
     pygame.display.flip()
 
