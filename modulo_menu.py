@@ -1,3 +1,4 @@
+
 """""
 TP GRUPAL PYGAME
 
@@ -12,19 +13,17 @@ Elija una opción: """)
 
     return opcion
 
-lista_preguntas = [{"Pregunta": "¿Cual es la capital de Argentina?","Opciones": ["La plata", "Buenos aires"],"Correcta": 2},{"Pregunta": "¿Cuanto es 2 + 2?","Opciones": ["3", "4"],"Correcta": 2},{"Pregunta": "¿Cuál es la capital de España?", "Opciones": ["Madrid", "Barcelona"],"Correcta": 1},{"Pregunta": "¿Cuánto es 5 * 6?","Opciones": ["30", "35"],"Correcta": 2},{"Pregunta": "¿Cuál es el río más largo del mundo?","Opciones": ["Nilo", "Misisipi"],"Correcta": 1},{"Pregunta": "¿Quién escribió 'Cien años de soledad'?","Opciones": ["Gabriel García Márquez", "Jorge Luis Borges"],"Correcta": 1},{"Pregunta": "¿Cuál es el resultado de 7 + 8?","Opciones": ["15", "16"],"Correcta": 1},{"Pregunta": "¿Qué país tiene la mayor población del mundo?","Opciones": ["India", "Estados Unidos"],"Correcta": 1},{"Pregunta": "¿Cuál es el idioma oficial de Brasil?","Opciones": ["Español", "Portugués"],"Correcta": 2},{"Pregunta": "¿En qué año comenzó la Segunda Guerra Mundial?","Opciones": ["1937", "1939"],"Correcta": 2}]
+lista_preferencias = cargar_preguntas()
 
 system("cls")
 
-# datos_juego(lista_preguntas)
-
 moneda_base = 0
+
 while True:
     opcion = elegir_opcion()
     match opcion:
         case "1":
-            preguntas_respuestas(lista_preguntas)
-            monedas_incrementales(PUNTOS, moneda_base)
+            preguntas_respuestas(lista_preferencias)
         case "2":
             print("Gracias por escogernos.")
             print("Saliendo del programa..")
