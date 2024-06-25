@@ -6,7 +6,7 @@ Intregrantes: Nicolás Doyhenart, Santino Fernandez
 from archivos import *
 import random
 
-puntos = [50, 100, 200, 250, 300, 400, 500, 600, 750, 1000]
+PUNTOS = [50, 100, 200, 250, 300, 400, 500, 600, 750, 1000]
 
 def monedas_incrementales(puntos: list, monedas_base: int):
     posicion = random.randint(0, len(puntos) - 1)
@@ -31,7 +31,7 @@ def preguntas_respuestas(lista_preguntas: list):
             respuesta = int(input("Seleccione la respuesta (1 o 2): "))
         
         if respuesta == pregunta_seleccionada["Correcta"]:
-            monedas = monedas_incrementales(puntos, monedas)
+            monedas = monedas_incrementales(PUNTOS, monedas)
             print(f"¡Respuesta correcta! Usted suma {monedas} monedas!!.")
         else:
             print("Incorrecto. La respuesta correcta era:", pregunta_seleccionada["Opciones"][pregunta_seleccionada["Correcta"] - 1])
