@@ -5,8 +5,8 @@ Intregrantes: Nicolás Doyhenart, Santino Fernandez
 """""
 import pygame
 from evento2 import *
-from especificas import *
-from modulo_puntos import *
+from especificas_eventos import *
+from modulo_preguntas import *
 
 BLANCO = (255, 255, 255)
 NEGRO = (0, 0, 0)
@@ -38,13 +38,12 @@ fondo = pygame.image.load(r"TP-PYGAME-COLLAB-main/recursos/fondo.jpg")
 fondo = pygame.transform.scale(fondo, VENTANA1)
 
 jueces = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\guampa.png")
-jueces = pygame.transform.scale(jueces, (100, 140))
+jueces = pygame.transform.scale(jueces, (100, 150))
 
 tribuna = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\tribuna transparente.png")
 tribuna = pygame.transform.scale(tribuna, (750, 600))
 
-decision = decision_aux(tupla)
-
+decision = color_aleateorio
 moneda = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\moneda.png")
 moneda = pygame.transform.scale(moneda, (40, 30))
 
@@ -52,6 +51,9 @@ fuente = pygame.font.Font(None, 36)
 
 monedas = pygame.Rect(ANCHO_VENTANA - 100, 80, 100, 30)
 input = pygame.Rect(180, 650, 150, 90)
+
+incognita = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\incognita.png")
+incognita = pygame.transform.scale(incognita, (40, 40))
 
 color = ROJO
 color_inactivo = AZUL
@@ -84,20 +86,19 @@ while bandera:
 
 
     x = 100
+    y = 370
     for i in range(10):
-        decisiones = pygame.Rect(x+30 ,360, 40, 40)
-        pygame.draw.rect(ventana, decision, decisiones)
-
-        #ventana.blit(decisiones, (x, 330))
-        ventana.blit(jueces, (x, 300))
-
-
-        x += 100
-        if x >= 600:
+        decisiones = pygame.Rect(x+30 ,y, 40, 40)
+        if x <= 500:
+            pygame.draw.rect(ventana, decision, decisiones)
+            #ventana.blit(incognita,(x +30, y))
+            ventana.blit(jueces, (x, 300))
+            x += 100
+        else:
             x = 100
+       
 
 
-    #pygame.draw.rect(ventana, NEGRO, monedas)
     #Todo lo relacionado con el button de this or that
     texto_superficie = fuente.render("This or that", True, BLANCO)
     pygame.draw.rect(ventana, color, input)

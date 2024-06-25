@@ -18,12 +18,13 @@ system("cls")
 
 # datos_juego(lista_preguntas)
 
+moneda_base = 0
 while True:
     opcion = elegir_opcion()
     match opcion:
         case "1":
             preguntas_respuestas(lista_preguntas)
-            monedas_incrementales(lista_preguntas)
+            monedas_incrementales(PUNTOS, moneda_base)
         case "2":
             print("Gracias por escogernos.")
             print("Saliendo del programa..")
