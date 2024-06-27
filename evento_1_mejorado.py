@@ -34,25 +34,15 @@ pygame.display.set_caption("Tot or trivia")
 icono = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\logo.jpg")
 pygame.display.set_icon(icono)
 
-fondo = pygame.image.load(r"TP-PYGAME-COLLAB-main/recursos/fondo.jpg")
-fondo = pygame.transform.scale(fondo, VENTANA1)
 
-jueces = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\guampa.png")
-jueces = pygame.transform.scale(jueces, (100, 150))
-
-tribuna = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\tribuna transparente.png")
-tribuna = pygame.transform.scale(tribuna, (750, 600))
-
-decision = color_aleateorio
 
 fuente = pygame.font.Font(None, 36)
 
 
-incognita = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\incognita.png")
-incognita = pygame.transform.scale(incognita, (40, 40))
+# incognita = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\incognita.png")
+# incognita = pygame.transform.scale(incognita, (40, 40))
 
 #Botones importantes(tot, volver, etc)
-input = pygame.Rect(180, 650, 150, 90)
 
 color = ROJO
 color_inactivo = AZUL
@@ -61,30 +51,59 @@ color = color_inactivo
 activo = False
 texto = ""
 
-def ventana_principal():
-    ventana.blit(fondo, (0, 0))    
-    ventana.blit(tribuna, (0, 0))
+def fondo():
+    fondo = pygame.image.load(r"TP-PYGAME-COLLAB-main/recursos/fondo.jpg")
+    fondo = pygame.transform.scale(fondo, VENTANA1)
 
-def jueces_funcion():
-    #Todo lo relacionado con el button de this or that
-    x = 100
-    y = 370
-    for i in range(10):
-        decisiones = pygame.Rect(x+30 ,y, 40, 40)
-        if x <= 500:
-            pygame.draw.rect(ventana, decision, decisiones)
-            #ventana.blit(incognita,(x +30, y))
-            ventana.blit(jueces, (x, 300))
-            x += 100
+    ventana.blit(fondo, (0, 0))    
+
+def tribuna():
+    tribuna = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\tribuna_mejorada.png")
+    tribuna = pygame.transform.scale(tribuna, (600, 500))
+    ventana.blit(tribuna, (50, 20))
+
+
+def jueces_funcion(decision: tuple):
+    decision_x = 40
+    decision_y = 40
+    coordenada_x = 100
+    coordenada_y = 370
+    personajes = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\guampa.png")
+    personajes = pygame.transform.scale(personajes, (100, 150))
+
+    midecision = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\incognita.png")
+    midecision = pygame.transform.scale(midecision, (decision_x,decision_y))
+
+    decisiones = pygame.Rect(coordenada_x + 30, coordenada_y, decision_x, decision_y)
+    decisiones_2 = pygame.Rect(coordenada_x + 30, coordenada_y - 100, decision_x, decision_y)
+
+    for i in range(6):
+        if coordenada_x <= 500:
+            if decision is (ROJO, AZUL):
+                pygame.draw.rect(ventana, decision, decisiones)
+                pygame.draw.rect(ventana, decision, decisiones_2)
+            else:
+                ventana.blit(midecision, (coordenada_x + 30, coordenada_y, decision_x, decision_y))
+                ventana.blit(midecision, (coordenada_x + 30, coordenada_y -100, decision_x, decision_y))
+
+
+
+            ventana.blit(personajes, (coordenada_x, 200))
+            ventana.blit(personajes, (coordenada_x, 300))
+
+            coordenada_x += 100
         else:
-            x = 100
+            coordenada_x = 100
        
 
 def button_tot():
+    #Todo lo relacionado con el button de this or that
+    input_tot = pygame.Rect(275, 750, 150, 90)
+
     texto_superficie = fuente.render("This or that", True, BLANCO)
-    pygame.draw.rect(ventana, color, input)
-    ventana.blit(texto_superficie, (input.x + 5, input.y + 5))
-    pygame.draw.rect(ventana, color, input, 2)
+    pygame.draw.rect(ventana, color, input_tot)
+    ventana.blit(texto_superficie, (input_tot.x + 5, input_tot.y + 5))
+    #pygame.draw.rect(ventana, color, input_tot, 2)
 
 def monedas_contador(monedas_base):
     #Todo lo relacionado con el contador d monedas
@@ -105,36 +124,115 @@ def vuelta():
     
     ventana.blit(punto_vuelta, (ANCHO_VENTANA - 35, ALTO_VENTANA - 35))
 
-punto_vuelta = pygame.Rect(ANCHO_VENTANA - 35, ALTO_VENTANA - 35, 30, 30)
+
+def mi_personaje():
+    x_personaje = 150
+    y_personaje = 150
+    personajes = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\guampa.png")
+    personajes = pygame.transform.scale(personajes, (400, 600))
+    ventana.blit(personajes,(x_personaje, y_personaje))
+
+def decision_personaje(estado, color):
+    if estado:
+        midecision = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\incognita.png")
+        midecision = pygame.transform.scale(midecision, (160,140))
+        ventana.blit(midecision, (150 + 115, 150 + 280))
+    else:
+        mi_decision = pygame.Rect(150 + 115, 150 + 280, 160,140)
+        pygame.draw.rect(ventana, color, mi_decision)
+
+def botones_azul_rojo(opcion_azul: str, opcion_roja: str):
+    x = 100
+    y = 650
+    boton_altura = 90
+    boton_ancho = 250
+
+    rojo = pygame.Rect(x, y, boton_ancho, boton_altura)
+    pygame.draw.rect(ventana, ROJO, rojo)
+    pygame.draw.rect(ventana, NEGRO, rojo, 2)
+    texto_superficie = fuente.render(f"{opcion_roja}", True, NEGRO)
+    ventana.blit(texto_superficie, (rojo.x + 5, rojo.y + 5))
+
+    azul = pygame.Rect(x + boton_ancho, y, boton_ancho, boton_altura)
+    pygame.draw.rect(ventana, AZUL_CLARO, azul)
+    pygame.draw.rect(ventana, NEGRO, azul, 2)
+    texto_superficie = fuente.render(f"{opcion_azul}", True, BLANCO)
+    ventana.blit(texto_superficie, (azul.x + 5, azul.y + 5))
+
+def texto_pregunta(pregunta: str):
+    ancho = 500
+    alto = 50
+    x = 100
+    y = 600
+    cuadro_preg = pygame.Rect(x, y, ancho, alto)
+    pygame.draw.rect(ventana, GRIS, cuadro_preg)
+    pygame.draw.rect(ventana, NEGRO, cuadro_preg, 2)
+    texto_preg = fuente.render(f"{pregunta}", True, NEGRO)
+    ventana.blit(texto_preg, (x + 3, y + 15))
+
+
+
+
+
+
+
+
 
 
 
 
 bandera = True
 monedas_base = 0
-estado = "segundo estado"
+estado = "principal"
+boton_decision = True
+color_decision = None
 while bandera:
     for evento in pygame.event.get():
-        #Salida del juego por la "X" 
+
+        if estado == "principal":
+            #Dependiendo del estado del juego, se habilitan los botones o no
+            input_tot = pygame.Rect(275, 750, 150, 90)
+        elif estado == "segundo estado":
+            punto_vuelta = pygame.Rect(ANCHO_VENTANA - 35, ALTO_VENTANA - 35, 30, 30)
+            button_rojo = pygame.Rect(180, 650, 150, 90)
+            button_azul = pygame.Rect(180 + 180, 650, 150, 90)
+
         if evento.type == pygame.QUIT:
+            #Salida del juego por la "X" 
             bandera = False
-
-        if evento.type == pygame.MOUSEBUTTONDOWN:
-            if input.collidepoint(evento.pos):
-                estado = "principal"
-            if punto_vuelta.collidepoint(evento.pos):
+        elif evento.type == pygame.MOUSEBUTTONDOWN:
+            #Cuando detecta que se apreta en click izq del mouse, 
+            #elige como proseguir dependiendo donde toco(que boton)
+            if input_tot.collidepoint(evento.pos):
                 estado = "segundo estado"
-                
+            elif punto_vuelta.collidepoint(evento.pos):
+                estado = "principal"
+                boton_decision = True
+
+            elif button_rojo.collidepoint(evento.pos) or button_azul.collidepoint(evento.pos):
+                boton_decision = False
+                if button_rojo.collidepoint(evento.pos):
+                    color_decision = ROJO
+                else:
+                    color_decision = AZUL
         
-
-
+        
+        
+    """Esta parte llama a las funciones que se encargan de ilustrar los botones, fondo, y partes
+    visuales del programa. Esto dependiendo del estado en que este el programa."""
+    fondo()
     if estado == "principal":
-        ventana.fill(BLANCO)
-        vuelta()
-    else:
-        ventana_principal()
-        jueces_funcion()
+        tribuna()
+        jueces_funcion(ROJO)
         button_tot()
+    elif estado == "segundo estado":
+        decision_personaje(boton_decision, color_decision)
+        mi_personaje()
+        botones_azul_rojo("azul", "rojo")
+        texto_pregunta("PREGUNTAAAAA")     
+        vuelta()
+    elif estado == "tercer estado":
+        pass
         
 
     monedas_contador(monedas_base)
