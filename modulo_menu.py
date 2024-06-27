@@ -1,11 +1,10 @@
-
 """""
 TP GRUPAL PYGAME
 
 Intregrantes: Nicolás Doyhenart, Santino Fernandez
 """""
 from os import system
-from modulo_preguntas import *
+from funcionalidad import *
 
 def elegir_opcion():
     opcion = input("""Bienvenido al juego "This or that"\n1- Jugar\n2- Salir\n
@@ -13,7 +12,7 @@ Elija una opción: """)
 
     return opcion
 
-lista_preferencias = cargar_preguntas()
+leer_preguntas(lista_preferencias)
 
 system("cls")
 
