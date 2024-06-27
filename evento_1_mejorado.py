@@ -42,7 +42,6 @@ fuente = pygame.font.Font(None, 36)
 # incognita = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\incognita.png")
 # incognita = pygame.transform.scale(incognita, (40, 40))
 
-#Botones importantes(tot, volver, etc)
 
 color = ROJO
 color_inactivo = AZUL
@@ -74,12 +73,12 @@ def jueces_funcion(decision: tuple):
     midecision = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\incognita.png")
     midecision = pygame.transform.scale(midecision, (decision_x,decision_y))
 
-    decisiones = pygame.Rect(coordenada_x + 30, coordenada_y, decision_x, decision_y)
-    decisiones_2 = pygame.Rect(coordenada_x + 30, coordenada_y - 100, decision_x, decision_y)
 
     for i in range(6):
         if coordenada_x <= 500:
-            if decision is (ROJO, AZUL):
+            if decision is ROJO or decision is AZUL:
+                decisiones = pygame.Rect(coordenada_x + 30, coordenada_y, decision_x, decision_y)
+                decisiones_2 = pygame.Rect(coordenada_x + 30, coordenada_y - 100, decision_x, decision_y)
                 pygame.draw.rect(ventana, decision, decisiones)
                 pygame.draw.rect(ventana, decision, decisiones_2)
             else:
@@ -188,33 +187,35 @@ boton_decision = True
 color_decision = None
 while bandera:
     for evento in pygame.event.get():
+        try:
+            if estado == "principal":
+                #Dependiendo del estado del juego, se habilitan los botones o no
+                input_tot = pygame.Rect(275, 750, 150, 90)
+            elif estado == "segundo estado":
+                punto_vuelta = pygame.Rect(ANCHO_VENTANA - 35, ALTO_VENTANA - 35, 30, 30)
+                button_rojo = pygame.Rect(180, 650, 150, 90)
+                button_azul = pygame.Rect(180 + 180, 650, 150, 90)
 
-        if estado == "principal":
-            #Dependiendo del estado del juego, se habilitan los botones o no
-            input_tot = pygame.Rect(275, 750, 150, 90)
-        elif estado == "segundo estado":
-            punto_vuelta = pygame.Rect(ANCHO_VENTANA - 35, ALTO_VENTANA - 35, 30, 30)
-            button_rojo = pygame.Rect(180, 650, 150, 90)
-            button_azul = pygame.Rect(180 + 180, 650, 150, 90)
+            if evento.type == pygame.QUIT:
+                #Salida del juego por la "X" 
+                bandera = False
+            elif evento.type == pygame.MOUSEBUTTONDOWN:
+                #Cuando detecta que se apreta en click izq del mouse, 
+                #elige como proseguir dependiendo donde toco(que boton)
+                if input_tot.collidepoint(evento.pos):
+                    estado = "segundo estado"
+                elif punto_vuelta.collidepoint(evento.pos):
+                    estado = "principal"
+                    boton_decision = True
 
-        if evento.type == pygame.QUIT:
-            #Salida del juego por la "X" 
-            bandera = False
-        elif evento.type == pygame.MOUSEBUTTONDOWN:
-            #Cuando detecta que se apreta en click izq del mouse, 
-            #elige como proseguir dependiendo donde toco(que boton)
-            if input_tot.collidepoint(evento.pos):
-                estado = "segundo estado"
-            elif punto_vuelta.collidepoint(evento.pos):
-                estado = "principal"
-                boton_decision = True
-
-            elif button_rojo.collidepoint(evento.pos) or button_azul.collidepoint(evento.pos):
-                boton_decision = False
-                if button_rojo.collidepoint(evento.pos):
-                    color_decision = ROJO
-                else:
-                    color_decision = AZUL
+                elif button_rojo.collidepoint(evento.pos) or button_azul.collidepoint(evento.pos):
+                    boton_decision = False
+                    if button_rojo.collidepoint(evento.pos):
+                        color_decision = ROJO
+                    else:
+                        color_decision = AZUL
+        except:
+            pass
         
         
         
@@ -223,7 +224,7 @@ while bandera:
     fondo()
     if estado == "principal":
         tribuna()
-        jueces_funcion(ROJO)
+        jueces_funcion(None)
         button_tot()
     elif estado == "segundo estado":
         decision_personaje(boton_decision, color_decision)
