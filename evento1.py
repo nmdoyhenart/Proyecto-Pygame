@@ -34,6 +34,8 @@ ALTO_VENTANA = 700
 
 VENTANA1 = (ANCHO_VENTANA, ALTO_VENTANA)
 
+tiempo_transcurrido = lambda contador, fps: contador // fps
+
 pygame.init()
 
 FUENTE = pygame.font.Font(None, 36)
@@ -81,15 +83,15 @@ def decisiones_jueces():
 
 
 def jueces_funcion(decision: list[tuple]):
-    decision_x = 40
-    decision_y = 40
+    decision_ancho = 40
+    decision_alto = 40
     coordenada_x = 100
     coordenada_y = 370
     personajes = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\guampa.png")
     personajes = pygame.transform.scale(personajes, (100, 150))
 
     midecision = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\incognita.png")
-    midecision = pygame.transform.scale(midecision, (decision_x,decision_y))
+    midecision = pygame.transform.scale(midecision, (decision_ancho,decision_alto))
 
 
     for i in range(5):
@@ -97,14 +99,14 @@ def jueces_funcion(decision: list[tuple]):
             
             try:
                 if decision[0] is ROJO or decision[0] is AZUL:
-                    decisiones = pygame.Rect(coordenada_x + 30, coordenada_y, decision_x, decision_y)
-                    decisiones_2 = pygame.Rect(coordenada_x + 30, coordenada_y - 100, decision_x, decision_y)
+                    decisiones = pygame.Rect(coordenada_x + 30, coordenada_y, decision_ancho, decision_alto)
+                    decisiones_2 = pygame.Rect(coordenada_x + 30, coordenada_y - 100, decision_ancho, decision_alto)
                     pygame.draw.rect(ventana, decision[i], decisiones)
                     pygame.draw.rect(ventana, decision[i + 5], decisiones_2)
             
             except:
-                ventana.blit(midecision, (coordenada_x + 30, coordenada_y, decision_x, decision_y))
-                ventana.blit(midecision, (coordenada_x + 30, coordenada_y -100, decision_x, decision_y))
+                ventana.blit(midecision, (coordenada_x + 30, coordenada_y, decision_ancho, decision_alto))
+                ventana.blit(midecision, (coordenada_x + 30, coordenada_y -100, decision_ancho, decision_alto))
 
 
 
@@ -289,7 +291,8 @@ def tiempo(contador, limite_tiempo, fps):
     text_tiempo = FUENTE.render(f"{contador // 20}", True, BLANCO)
     ventana.blit(text_tiempo, (time_x + 10, time_y + 5))
     retorna = False
-    if (contador // fps) >= limite_tiempo:
+    tiempo_real = tiempo_transcurrido(contador, fps)
+    if tiempo_real >= limite_tiempo:
         retorna = True
     return retorna
     
@@ -317,7 +320,8 @@ def pantalla_eliminado():
 
 def tiempo_espera(contador_espera, limite,fps):
     retorna = False
-    if (contador_espera // fps) >= limite:
+    tiempo_real = tiempo_transcurrido(contador_espera, fps)
+    if tiempo_real >= limite:
         retorna = True
     return retorna
     
@@ -467,7 +471,7 @@ while bandera:
         tribuna()
         jueces_funcion(lista_jueces)
         contador_espera += 1
-        bandera_espera = tiempo_espera(contador_espera, 5, fps)
+        bandera_espera = tiempo_espera(contador_espera, 3, fps)
         if bandera_espera :
             contador_espera = 0
             bandera_espera = not bandera_espera
@@ -476,11 +480,13 @@ while bandera:
 
     elif estado == "eliminado":
         pantalla_eliminado()
-
+        comodin_uno = True
+        comodin_dos = True
+        comodin_tres = True
         monedas_base = 0
         respuestas_correctas = 0
         contador_espera += 1
-        bandera_espera = tiempo_espera(contador_espera, 5, fps)
+        bandera_espera = tiempo_espera(contador_espera, 3, fps)
         if bandera_espera :
             contador_espera = 0
             bandera_espera = not bandera_espera
