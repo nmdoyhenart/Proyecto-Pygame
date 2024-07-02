@@ -20,6 +20,8 @@ ROJO_CLARO = (255, 150, 136)
 
 tupla = (ROJO, AZUL)
 
+lista_puntos = []
+cargar_puntos()
 
 PUNTOS = [50, 100, 200, 250, 300, 400, 500, 600, 750, 1000]
 
@@ -301,8 +303,24 @@ def fuera_de_tiempo():
     text_eliminacion = FUENTE.render(f"Usted ha excedido el tiempo y perdio.", True, BLANCO)
     ventana.blit(text_eliminacion, (eliminado_x + 10, eliminado_y + 5))
 
-def comodin_dossgs():
-    pass
+def pantalla_eliminado():
+    eliminado_ancho = 400
+    eliminado_alto = 200
+
+    eliminado_x = 150
+    eliminado_y = 250
+
+    aviso_eliminado = pygame.Rect(eliminado_x, eliminado_y, eliminado_ancho, eliminado_alto)
+    pygame.draw.rect(ventana, NEGRO, aviso_eliminado)
+    texto_eliminado = FUENTE.render(f"PERDISTE :P", False, BLANCO)
+    ventana.blit(texto_eliminado, (eliminado_x + 100, eliminado_y + 82))
+
+def tiempo_eliminado(contador_eliminado, limite,fps):
+    retorna = False
+    if (contador_eliminado // fps) >= limite:
+        retorna = True
+    return retorna
+    
 
 
 bandera = True
@@ -313,6 +331,7 @@ boton_decision = True
 color_decision = None
 preguntas = leer_preguntas("Preguntas.csv")
 contador_comodin_dos = 0
+contador_eliminado = 0
 comodin_uno = True
 comodin_dos = True
 comodin_tres = True
@@ -369,16 +388,22 @@ while bandera:
                     
                     comprobar_eleccion = comprobacion(lista_jueces, color_decision)
                     if comprobar_eleccion:
+                        respuesta_correcta_sonido()
                         monedas_base = monedas_incrementales(PUNTOS, monedas_base, respuestas_correctas)
+                        lista_puntos.append(monedas_base)
                     else:
                         estado = "eliminado"
+                        
+                        derrota()
                 elif REC_COMODIN1.collidepoint(evento.pos):
                     if comodin_uno == True:
                         contador = 0
                         pregunta_aleatoria = random.randint(0, len(preguntas) - 1)
                         pregunta_resp = preguntas[pregunta_aleatoria]
                         comodin_uno = False
-                    efecto_de_sonido()
+                        efecto_de_sonido()
+                    else:
+                        comodin_usado()
                 elif REC_COMODIN2.collidepoint(evento.pos):
                     if comodin_dos == True:
                         contador = 0
@@ -386,14 +411,17 @@ while bandera:
                         respuestas_correctas += 1
                         monedas_base = monedas_incrementales(PUNTOS, monedas_base, respuestas_correctas)
                         comodin_dos = False # Next
-
-                    efecto_de_sonido()
+                        efecto_de_sonido()
+                    else:
+                        comodin_usado()
                 elif REC_COMODIN3.collidepoint(evento.pos):
                     if comodin_tres == True:
 
                         comodin_tres = False   
                         # Half
-                    efecto_de_sonido()
+                        efecto_de_sonido()
+                    else:
+                        comodin_usado()
         except:
             pass
         
@@ -437,15 +465,21 @@ while bandera:
         vuelta()
 
     elif estado == "eliminado":
+        pantalla_eliminado()
+
         monedas_base = 0
         respuestas_correctas = 0
+        contador_eliminado += 1
+        aux = tiempo_eliminado(contador_eliminado, 5, fps)
+        if aux :
+            estado = "principal"
         vuelta()
 
     elif estado == "tiempo excedido":
         fuera_de_tiempo()
         vuelta()
     
-    
+    guardar_puntos(lista_puntos)
 
     
     clock.tick(fps)
