@@ -71,8 +71,8 @@ def tribuna():
 
 def decisiones_jueces():
     respuestas = [ROJO, AZUL]
-    lista_decisiones = [AZUL]
-    for i in range(9):
+    lista_decisiones = []
+    for i in range(11):
         decision = random.randint(0, 1)
         lista_decisiones.append(respuestas[decision])
     return lista_decisiones
@@ -112,11 +112,34 @@ def jueces_funcion(decision: list[tuple]):
             coordenada_x += 100
         else:
             coordenada_x = 100
+    
+
+def jueces_decision(decision: list):
+    contador_rojo = 0
+    contador_azul = 0
+    for elementos in decision:
+        if elementos == ROJO:
+            contador_rojo += 1
+        else:
+            contador_azul += 1
+    if contador_rojo > contador_azul:
+        retorna = ROJO
+    else:
+        retorna = AZUL
+    return retorna
+
+def comprobacion(voto_jueces, mi_decision):
+    color_decidido = jueces_decision(voto_jueces)
+    if color_decidido == mi_decision:
+        retorna = True
+    else:
+        retorna = False
+    return retorna
 
 
 def button_tot():
     #Todo lo relacionado con el button de this or that
-    input_tot = pygame.Rect(275, 550, 150, 90)
+    input_tot = pygame.Rect(275, 500, 150, 90)
 
     texto_superficie = FUENTE.render("This or that", True, BLANCO)
     pygame.draw.rect(ventana, color, input_tot)
@@ -241,9 +264,6 @@ def comodines(ventana, comodin_uno_flag, comodin_dos_flag, comodin_tres_flag):
         comodin3 = pygame.transform.scale(comodin3, (ancho_comodin, alto_comodin))
         ventana.blit(comodin3, (x_comodin3, y_comodin3))
 
-REC_COMODIN1 = pygame.Rect(10, 500, 30, 30)
-REC_COMODIN2 = pygame.Rect(10, 540, 30, 30)
-REC_COMODIN3 = pygame.Rect(10, 580, 30, 30)
 
 
 def texto_pregunta(pregunta: str):
@@ -257,7 +277,7 @@ def texto_pregunta(pregunta: str):
     texto_preg = FUENTE.render(f"{pregunta}", True, NEGRO)
     ventana.blit(texto_preg, (x + 3, y + 15))
 
-def tiempo(contador, limite_tiempo):
+def tiempo(contador, limite_tiempo, fps):
     time_x = 5
     time_y = 5
     time_ancho = 40
@@ -267,18 +287,18 @@ def tiempo(contador, limite_tiempo):
     text_tiempo = FUENTE.render(f"{contador // 20}", True, BLANCO)
     ventana.blit(text_tiempo, (time_x + 10, time_y + 5))
     retorna = False
-    if (contador // 20) >= limite_tiempo:
+    if (contador // fps) >= limite_tiempo:
         retorna = True
     return retorna
     
-def eliminacion():
+def fuera_de_tiempo():
     eliminado_x = 200
     eliminado_y = 350
     eliminado_ancho = 400
     eliminado_alto = 35
     eliminacion_cuadro = pygame.Rect(eliminado_x, eliminado_y, eliminado_ancho, eliminado_alto)
     pygame.draw.rect(ventana, NEGRO, eliminacion_cuadro)
-    text_eliminacion = FUENTE.render(f"Usted ha excedido el tiempo.", True, BLANCO)
+    text_eliminacion = FUENTE.render(f"Usted ha excedido el tiempo y perdio.", True, BLANCO)
     ventana.blit(text_eliminacion, (eliminado_x + 10, eliminado_y + 5))
 
 def comodin_dossgs():
@@ -296,6 +316,7 @@ contador_comodin_dos = 0
 comodin_uno = True
 comodin_dos = True
 comodin_tres = True
+fps = 20
 
 clock = pygame.time.Clock()
 while bandera:
@@ -303,11 +324,14 @@ while bandera:
         try:
             if estado == "principal":
                 #Dependiendo del estado del juego, se habilitan los botones o no
-                input_tot = pygame.Rect(275, 550, 150, 90)
+                input_tot = pygame.Rect(275, 500, 150, 90)
             elif estado == "segundo estado":
                 punto_vuelta = pygame.Rect(ANCHO_VENTANA - 35, ALTO_VENTANA - 35, 30, 30)
                 button_rojo = pygame.Rect(100, 600, 250, 90)
                 button_azul = pygame.Rect(100 + 250, 600, 250, 90)
+                REC_COMODIN1 = pygame.Rect(10, 500, 30, 30)
+                REC_COMODIN2 = pygame.Rect(10, 540, 30, 30)
+                REC_COMODIN3 = pygame.Rect(10, 580, 30, 30)
 
             if evento.type == pygame.QUIT:
                 #Salida del juego por la "X" 
@@ -317,11 +341,12 @@ while bandera:
                 #elige como proseguir dependiendo donde toco(que boton)
 
                 if input_tot.collidepoint(evento.pos):
-                    estado = "segundo estado"
-                    contador = 0
-                    pregunta_aleatoria = random.randint(0, len(preguntas) - 1)
-                    pregunta_resp = preguntas[pregunta_aleatoria]
-                    efecto_de_sonido()
+                    if estado == "principal":
+                        contador = 0
+                        pregunta_aleatoria = random.randint(0, len(preguntas) - 1)
+                        pregunta_resp = preguntas[pregunta_aleatoria]
+                        estado = "segundo estado"
+                        efecto_de_sonido()
 
                 elif punto_vuelta.collidepoint(evento.pos):
                     estado = "principal"
@@ -329,26 +354,34 @@ while bandera:
                     efecto_de_sonido()
 
                 elif button_rojo.collidepoint(evento.pos) or button_azul.collidepoint(evento.pos):
-                    boton_decision = False
+                    contador = 0
+                    if button_rojo.collidepoint(evento.pos):
+                        color_decision = ROJO
+                        boton_decision = False
+                    elif button_azul.collidepoint(evento.pos):
+                        color_decision = AZUL
+                        boton_decision = False
                     estado = "tercer estado"
                     lista_jueces = decisiones_jueces()
                     efecto_de_sonido()
                     if respuestas_correctas <= 10:
                         respuestas_correctas +=1
-                    monedas_base = monedas_incrementales(PUNTOS, monedas_base, respuestas_correctas)
-
-                    if button_rojo.collidepoint(evento.pos):
-                        color_decision = ROJO
+                    
+                    comprobar_eleccion = comprobacion(lista_jueces, color_decision)
+                    if comprobar_eleccion:
+                        monedas_base = monedas_incrementales(PUNTOS, monedas_base, respuestas_correctas)
                     else:
-                        color_decision = AZUL
+                        estado = "eliminado"
                 elif REC_COMODIN1.collidepoint(evento.pos):
                     if comodin_uno == True:
+                        contador = 0
                         pregunta_aleatoria = random.randint(0, len(preguntas) - 1)
                         pregunta_resp = preguntas[pregunta_aleatoria]
                         comodin_uno = False
                     efecto_de_sonido()
                 elif REC_COMODIN2.collidepoint(evento.pos):
                     if comodin_dos == True:
+                        contador = 0
                         lista_jueces = decisiones_jueces()
                         respuestas_correctas += 1
                         monedas_base = monedas_incrementales(PUNTOS, monedas_base, respuestas_correctas)
@@ -392,10 +425,10 @@ while bandera:
         comodines(ventana, comodin_uno, comodin_dos, comodin_tres)
         vuelta()
         botones_azul_rojo(pregunta_resp["Opciones"][0], pregunta_resp["Opciones"][1])
-        time = tiempo(contador, 15)
+        time = tiempo(contador, 15, fps)
         contador += 1    
         if time :
-            estado = "eliminado"
+            estado = "tiempo excedido"
 
 
     elif estado == "tercer estado":
@@ -404,15 +437,18 @@ while bandera:
         vuelta()
 
     elif estado == "eliminado":
-        eliminacion()
-        vuelta()    
-    elif estado == "segundo comodin":
-        pass
+        monedas_base = 0
+        respuestas_correctas = 0
+        vuelta()
+
+    elif estado == "tiempo excedido":
+        fuera_de_tiempo()
+        vuelta()
     
     
 
     
-    clock.tick(20)
+    clock.tick(fps)
     pygame.display.flip()
 
 pygame.quit()
