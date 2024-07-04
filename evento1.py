@@ -5,7 +5,7 @@ Intregrantes: Nicolás Doyhenart, Santino Fernandez
 """""
 import pygame
 import random
-from efecto_de_sonido import *
+from efectos_de_sonido import *
 from funcionalidad import *
 from archivos import *
 
@@ -25,7 +25,7 @@ cargar_puntos()
 
 PUNTOS = [50, 100, 200, 250, 300, 400, 500, 600, 750, 1000]
 
-lista_preferencias = [{"Pregunta": "¿Qué prefieres?", "Opciones": ["Ver el amanecer", "Ver el atardecer"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Ser invisible", "Poder volar"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Tener siempre razón", "Tener siempre la última palabra"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["No volver a dormir", "No volver a comer"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Viajar por el mundo", "Quedarte en tu ciudad"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Ser rico", "Ser feliz"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["No tener internet", "No tener teléfono"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Ver una serie completa", "Leer una saga completa"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Vivir en una mansión", "Vivir en una cabaña en el bosque"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Ser el protagonista de una película", "Ser el director de una película"]}, {"Pregunta": "¿Qué prefieres?", "Opciones": ["Nadar en el mar", "Nadar en un lago"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Escuchar música rock", "Escuchar música clásica"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Bailar salsa", "Bailar hip-hop"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Comer pizza", "Comer sushi"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Jugar al fútbol", "Jugar al baloncesto"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Visitar museos de arte", "Visitar museos de historia"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Montar en bicicleta", "Montar en moto"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Leer novelas de ciencia ficción", "Leer novelas de misterio"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Tomar té", "Tomar café"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Aprender un nuevo idioma", "Aprender a tocar un instrumento musical"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Ir al cine", "Ir al teatro"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Cantar en la ducha", "Bailar en la ducha"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Caminar por la playa al amanecer", "Caminar por la montaña al atardecer"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Practicar yoga", "Practicar pilates"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Hacer senderismo", "Hacer escalada"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Ver una película de comedia", "Ver una película de terror"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Ir de compras", "Ir de excursión"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Jugar videojuegos", "Jugar juegos de mesa"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Hacer ejercicio al aire libre", "Hacer ejercicio en el gimnasio"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Preparar comida italiana", "Preparar comida asiática"]}]
+lista_preferencias = [{"Pregunta": "¿Qué prefieres?", "Opciones": ["Ver el amanecer", "Ver el atardecer"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Ser invisible", "Poder volar"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Tener razón", "Tener la última palabra"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["No dormir", "No comer"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Viajar", "Quedarte en tu ciudad"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Ser rico", "Ser feliz"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["No internet", "No teléfono"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Ver serie", "Leer saga"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Vivir en mansión", "Vivir en cabaña"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Ser protagonista", "Ser director"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Nadar en mar", "Nadar en lago"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Música rock", "Música clásica"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Bailar salsa", "Bailar hip-hop"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Comer pizza", "Comer sushi"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Jugar fútbol", "Jugar baloncesto"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Museos de arte", "Museos de historia"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Montar en bici", "Montar en moto"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Leer ciencia ficción", "Leer misterio"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Tomar té", "Tomar café"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Aprender idioma", "Aprender instrumento"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Ir al cine", "Ir al teatro"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Cantar en ducha", "Bailar en ducha"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Caminar playa", "Caminar montaña"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Practicar yoga", "Practicar pilates"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Hacer senderismo", "Hacer escalada"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Película comedia", "Película terror"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Ir de compras", "Ir de excursión"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Jugar videojuegos", "Jugar juegos mesa"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Ejercicio aire libre", "Ejercicio gimnasio"]},{"Pregunta": "¿Qué prefieres?", "Opciones": ["Comida italiana", "Comida asiática"]}]
 
 guardar_preguntas(lista_preferencias, "Preguntas.csv")
 
@@ -43,15 +43,15 @@ FUENTE = pygame.font.Font(None, 36)
 ventana = pygame.display.set_mode(VENTANA1)
 pygame.display.set_caption("Tot or trivia")
 
-icono = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\logo.jpg")
+icono = pygame.image.load(r"recursos\logo.jpg")
 pygame.display.set_icon(icono)
 
-# color = ROJO
-# color_inactivo = AZUL
-# color_activo = ROJO
-# color = color_inactivo
-# activo = False
-# texto = ""
+color = ROJO
+color_inactivo = AZUL
+color_activo = ROJO
+color = color_inactivo
+activo = False
+texto = ""
 
 def fondo():
     """Función que implementa el fondo del juego en todo momento
@@ -59,7 +59,7 @@ def fondo():
     Args:
         -
     """
-    fondo = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\fondo.jpg")
+    fondo = pygame.image.load(r"recursos\fondo.jpg")
     fondo = pygame.transform.scale(fondo, VENTANA1)
 
     ventana.blit(fondo, (0, 0))    
@@ -70,7 +70,7 @@ def tribuna():
     Args:
         -
     """
-    tribuna = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\tribuna_jueces.png")
+    tribuna = pygame.image.load(r"recursos\tribuna_jueces.png")
     tribuna = pygame.transform.scale(tribuna, (600, 500))
     ventana.blit(tribuna, (55, 85))
 
@@ -108,10 +108,10 @@ def jueces_funcion(decision: list[tuple], comodin_tres: bool, contador: int):
     decision_y = 40
     coordenada_x = 100
     coordenada_y = 320
-    personajes = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\personaje.png")
+    personajes = pygame.image.load(r"recursos\personaje.png")
     personajes = pygame.transform.scale(personajes, (100, 150))
 
-    midecision = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\incognita.png")
+    midecision = pygame.image.load(r"recursos\incognita.png")
     midecision = pygame.transform.scale(midecision, (decision_x,decision_y))
 
     for i in range(len(decision)):
@@ -192,7 +192,7 @@ def monedas_contador(monedas_base: int):
         monedas_base: int: Numerico.
     """
     monedas = pygame.Rect(ANCHO_VENTANA - 100, 80, 100, 30)
-    moneda_icon = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\moneda.png")
+    moneda_icon = pygame.image.load(r"recursos\moneda.png")
     moneda_icon = pygame.transform.scale(moneda_icon, (40, 30))
 
     texto_monedas = FUENTE.render(str(monedas_base), True, BLANCO)
@@ -206,7 +206,7 @@ def vuelta():
     Args:
         -
     """
-    punto_vuelta = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\X_vuelta.png")
+    punto_vuelta = pygame.image.load(r"recursos\X_vuelta.png")
     punto_vuelta= pygame.transform.scale(punto_vuelta , (30, 30))
     ventana.blit(punto_vuelta, (ANCHO_VENTANA - 35, ALTO_VENTANA - 35))
 
@@ -218,7 +218,7 @@ def mi_personaje():
     """
     x_personaje = 150
     y_personaje = 150
-    personajes = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\personaje.png")
+    personajes = pygame.image.load(r"recursos\personaje.png")
     personajes = pygame.transform.scale(personajes, (400, 600))
     ventana.blit(personajes,(x_personaje, y_personaje))
 
@@ -229,7 +229,7 @@ def decision_personaje(estado: bool, color: str):
         estado: bool: Devuelve True o False, color: str: String.
     """
     if estado:
-        midecision = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\incognita.png")
+        midecision = pygame.image.load(r"recursos\incognita.png")
         midecision = pygame.transform.scale(midecision, (160,140))
         ventana.blit(midecision, (150 + 115, 150 + 280))
     else:
@@ -277,29 +277,29 @@ def comodines(ventana: int, comodin_uno: bool, comodin_dos: bool, comodin_tres: 
     y_comodin3 = y_comodin2 + alto_comodin + 10
 
     if comodin_uno:
-        comodin1 = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\comodin1.png")
+        comodin1 = pygame.image.load(r"recursos\comodin1.png")
         comodin1 = pygame.transform.scale(comodin1, (ancho_comodin, alto_comodin))
         ventana.blit(comodin1, (x_comodin1, y_comodin1))
     else:
-        comodin1 = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\cruz.png")
+        comodin1 = pygame.image.load(r"recursos\cruz.png")
         comodin1 = pygame.transform.scale(comodin1, (ancho_comodin, alto_comodin))
         ventana.blit(comodin1, (x_comodin1, y_comodin1))
 
     if comodin_dos:
-        comodin2 = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\comodin2.png")
+        comodin2 = pygame.image.load(r"recursos\comodin2.png")
         comodin2 = pygame.transform.scale(comodin2, (ancho_comodin, alto_comodin))
         ventana.blit(comodin2, (x_comodin2, y_comodin2))
     else:
-        comodin2 = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\cruz.png")
+        comodin2 = pygame.image.load(r"recursos\cruz.png")
         comodin2 = pygame.transform.scale(comodin2, (ancho_comodin, alto_comodin))
         ventana.blit(comodin2, (x_comodin2, y_comodin2))
 
     if comodin_tres:
-        comodin3 = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\comodin3.png")
+        comodin3 = pygame.image.load(r"recursos\comodin3.png")
         comodin3 = pygame.transform.scale(comodin3, (ancho_comodin, alto_comodin))
         ventana.blit(comodin3, (x_comodin3, y_comodin3))
     else:
-        comodin3 = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\cruz.png")
+        comodin3 = pygame.image.load(r"recursos\cruz.png")
         comodin3 = pygame.transform.scale(comodin3, (ancho_comodin, alto_comodin))
         ventana.blit(comodin3, (x_comodin3, y_comodin3))
 
@@ -394,6 +394,26 @@ def ganador():
 
     ganador_x = 150
     ganador_y = 500
+
+    imagen1_ancho = 200
+    imagen1_alto = 100
+
+    imagen1_x = 0
+    imagen1_y  = 500
+
+    imagen2_ancho = 200
+    imagen2_alto = 100
+
+    imagen2_x = 500
+    imagen2_y = 500
+
+    imagen1 = pygame.image.load(r"recursos\festejo1.jpg")
+    imagen1 = pygame.transform.scale(imagen1, (imagen1_ancho, imagen1_alto))
+    ventana.blit(imagen1, (imagen1_x, imagen1_y))
+
+    imagen2 = pygame.image.load(r"recursos\festejo2.jpg")
+    imagen2 = pygame.transform.scale(imagen2, (imagen2_ancho, imagen2_alto))
+    ventana.blit(imagen2, (imagen2_x, imagen2_y))
 
     aviso_ganador = pygame.Rect(ganador_x, ganador_y, ganador_ancho, ganardor_alto)
     pygame.draw.rect(ventana, GRIS, aviso_ganador)
