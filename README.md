@@ -3,7 +3,7 @@
 
 ---------------------------------------------------------
 
-##Instrucciones de jugabilidad / Markdown 🎮🎯
+Markdown 🎮🎯:
 
 1- Inciar el juego, con el boton "Jugar".
 2- El juego le mostrará una pregunta aleatoria y usted tendrá que seleccionar alguna de las dos opciones que aparecen debajo de la misma cuestion-
