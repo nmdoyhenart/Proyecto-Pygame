@@ -14,7 +14,7 @@ def cargar_puntos():
         -
     """
     try:
-        with open("Puntos.json", "r", encoding ='utf-8') as archivo:
+        with open("Puntos.json", "r") as archivo:
             aux = json.load(archivo)
             return aux["Puntos"]
     except (FileNotFoundError):
@@ -28,8 +28,8 @@ def guardar_puntos(lista_puntos: list):
         lista_puntos: list: Lista donde se encuentran los datos
     """
     puntos_dict = {"Puntos": lista_puntos}
-    with open("Puntos.json", "w", encoding ='utf-8') as archivo:
-        json.dump(puntos_dict, archivo, indent = 4, ensure_ascii = False)
+    with open("Puntos.json", "w") as archivo:
+        json.dump(puntos_dict, archivo, indent = 4)
 
 
 # Función para guardar las preguntas en un archivo CSV

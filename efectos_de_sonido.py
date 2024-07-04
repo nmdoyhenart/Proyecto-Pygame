@@ -40,7 +40,7 @@ def comodin_usado():
 
 def respuesta_correcta_sonido():
     """Efecto de sonido al coincidir con el publico.
-    
+
     Args:
         -
     """
@@ -48,3 +48,14 @@ def respuesta_correcta_sonido():
     sonido_fondo = pygame.mixer.Sound(r"recursos\respuesta_correcta.mp3")
     sonido_fondo.set_volume(0.7)
     sonido_fondo.play()
+
+def musica_fondo():
+    """Musica de fondo al iniciar el juego.
+
+    Args:
+        -
+    """
+    pygame.mixer.init()
+    musica__fondo_siempre = pygame.mixer.Sound(r"recursos\musica de fondo.mp3")
+    musica__fondo_siempre.set_volume(0.01)
+    musica__fondo_siempre.play()
