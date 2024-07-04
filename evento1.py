@@ -445,7 +445,7 @@ def pantalla_eliminado():
     ventana.blit(texto_eliminado, (eliminado_x + 100, eliminado_y + 82))
 
 def tiempo_espera(contador_espera: int, limite: int, fps: int):
-    """Calcula el en el cual te hecha del programa.
+    """Calcula el tiempo en el cual te hecha del programa.
 
     Args:
         contador_espera: int: Numerico, limite: int: Numerico, fps: int: Numerico.
