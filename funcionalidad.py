@@ -8,8 +8,6 @@ import random
 
 PUNTOS = [50, 100, 200, 250, 300, 400, 500, 600, 750, 1000]
 
-def monedas_incrementales(puntos: list, monedas_base: int):
-    posicion = random.randint(0, len(puntos) - 1)
-    monedas_base += puntos[posicion]
-    
+def monedas_incrementales(puntos: list, monedas_base: int, posicion: int):
+    monedas_base += puntos[posicion - 1]
     return monedas_base
