@@ -5,7 +5,7 @@ Intregrantes: Nicolás Doyhenart, Santino Fernandez
 """""
 import pygame
 import random
-from efectos_de_sonido import *
+from efecto_de_sonido import *
 from funcionalidad import *
 from archivos import *
 
@@ -43,7 +43,7 @@ FUENTE = pygame.font.Font(None, 36)
 ventana = pygame.display.set_mode(VENTANA1)
 pygame.display.set_caption("Tot or trivia")
 
-icono = pygame.image.load(r"recursos\logo.jpg")
+icono = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\logo.jpg")
 pygame.display.set_icon(icono)
 
 color = ROJO
@@ -54,57 +54,104 @@ activo = False
 texto = ""
 
 def fondo():
-    fondo = pygame.image.load(r"recursos\fondo.jpg")
+    fondo = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\fondo.jpg")
     fondo = pygame.transform.scale(fondo, VENTANA1)
 
     ventana.blit(fondo, (0, 0))    
 
 def tribuna():
-    tribuna = pygame.image.load(r"recursos\tribuna_jueces.png")
+    tribuna = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\tribuna_jueces.png")
     tribuna = pygame.transform.scale(tribuna, (600, 500))
     ventana.blit(tribuna, (55, 85))
+    
 
-def decisiones_jueces(iteraciones: int):
+def lista_decision(iteraciones):
     respuestas = [ROJO, AZUL]
     lista_decisiones = []
     for i in range(iteraciones):
         decision = random.randint(0, 1)
         lista_decisiones.append(respuestas[decision])
+
     return lista_decisiones
 
-def decision_jueces_comodin(comodin_tres):
-    if comodin_tres:
-        lista = decisiones_jueces(5)
-    else:
-        lista = decisiones_jueces(10)
+def decisiones_jueces(comodin_tres):
+    lista = lista_decision(5)
+    # if comodin_tres == False:
+    #     lista = lista_decision(2)
 
     return lista
 
-def jueces_funcion(decision: list[tuple]):
+
+
+
+def jueces_funcion(decision: list[tuple], comodin_tres: bool):
     decision_x = 40
     decision_y = 40
     coordenada_x = 100
     coordenada_y = 320
-    personajes = pygame.image.load(r"recursos\personaje.png")
+    personajes = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\personaje.png")
     personajes = pygame.transform.scale(personajes, (100, 150))
 
-    midecision = pygame.image.load(r"recursos\incognita.png")
+    midecision = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\incognita.png")
     midecision = pygame.transform.scale(midecision, (decision_x,decision_y))
 
-    for i in range(5):
-        if coordenada_x <= 500:
-            try:
-                if decision[0] is ROJO or decision[0] is AZUL:
-                    decisiones = pygame.Rect(coordenada_x + 30, coordenada_y, decision_x, decision_y)
-                    pygame.draw.rect(ventana, decision[i], decisiones)
-            except :
-                ventana.blit(midecision, (coordenada_x + 30, coordenada_y, decision_x, decision_y))
+    # for i in range(5):
+    #     if coordenada_x <= 500:
+    #         try:
+    #             if decision[0] is ROJO or decision[0] is AZUL:
+    #                 decisiones = pygame.Rect(coordenada_x + 30, coordenada_y, decision_x, decision_y)
+    #                 pygame.draw.rect(ventana, decision[i], decisiones)
+    #         except :
+    #             ventana.blit(midecision, (coordenada_x + 30, coordenada_y, decision_x, decision_y))
 
-            ventana.blit(personajes, (coordenada_x, 250))
+    #         ventana.blit(personajes, (coordenada_x, 250))
 
-            coordenada_x += 100
+    #         coordenada_x += 100
+    #     else:
+    #         coordenada_x = 100
+    
+    for i in range(len(decision)):
+        ventana.blit(midecision, (coordenada_x + 30, coordenada_y, decision_x, decision_y))
+        coordenada_x += 100
+
+    if decision[0] is ROJO or decision[0] is AZUL:
+        coordenada_x = 100
+        
+        if comodin_tres:
+            for i in range(len(decision)):
+
+                decisiones = pygame.Rect(coordenada_x + 30, coordenada_y, decision_x, decision_y)
+                pygame.draw.rect(ventana, decision[i], decisiones)
+                coordenada_x += 100
         else:
-            coordenada_x = 100
+            for i in range(2):
+                decisiones = pygame.Rect(coordenada_x + 30, coordenada_y, decision_x, decision_y)
+                pygame.draw.rect(ventana, decision[i], decisiones)
+                coordenada_x += 100
+            
+
+    coordenada_x = 100
+    for i in range(len(decision)):
+        ventana.blit(personajes, (coordenada_x, 250))
+        coordenada_x += 100
+
+    
+        
+    
+
+
+
+
+    
+
+# def funcion_auxiliar():
+#     personajes = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\guampa.png")
+#     personajes = pygame.transform.scale(personajes, (100, 150))
+
+#     midecision = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\incognita.png")
+#     midecision = pygame.transform.scale(midecision, (decision_x,decision_y))
+
+    
     
 def jueces_decision(decision: list):
     contador_rojo = 0
@@ -118,7 +165,6 @@ def jueces_decision(decision: list):
         retorna = ROJO
     else:
         retorna = AZUL
-
     return retorna
 
 def comprobacion(voto_jueces: list, mi_decision: tuple):
@@ -128,6 +174,7 @@ def comprobacion(voto_jueces: list, mi_decision: tuple):
     else:
         retorna = False
     return retorna
+
 
 def boton_jugar():
     centro = (350,549)
@@ -139,8 +186,9 @@ def boton_jugar():
     ventana.blit(texto_superficie, rectangulo_texto)
 
 def monedas_contador(monedas_base: int):
+    #Todo lo relacionado con el contador d monedas
     monedas = pygame.Rect(ANCHO_VENTANA - 100, 80, 100, 30)
-    moneda_icon = pygame.image.load(r"recursos\moneda.png")
+    moneda_icon = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\moneda.png")
     moneda_icon = pygame.transform.scale(moneda_icon, (40, 30))
 
     texto_monedas = FUENTE.render(str(monedas_base), True, BLANCO)
@@ -149,20 +197,20 @@ def monedas_contador(monedas_base: int):
     ventana.blit(moneda_icon, (ANCHO_VENTANA - 35, 80))
 
 def vuelta():
-    punto_vuelta = pygame.image.load(r"recursos\X_vuelta.png")
+    punto_vuelta = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\X_vuelta.png")
     punto_vuelta= pygame.transform.scale(punto_vuelta , (30, 30))
     ventana.blit(punto_vuelta, (ANCHO_VENTANA - 35, ALTO_VENTANA - 35))
 
 def mi_personaje():
     x_personaje = 150
     y_personaje = 150
-    personajes = pygame.image.load(r"recursos\personaje.png")
+    personajes = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\personaje.png")
     personajes = pygame.transform.scale(personajes, (400, 600))
     ventana.blit(personajes,(x_personaje, y_personaje))
 
 def decision_personaje(estado: bool, color: str):
     if estado:
-        midecision = pygame.image.load(r"recursos\incognita.png")
+        midecision = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\incognita.png")
         midecision = pygame.transform.scale(midecision, (160,140))
         ventana.blit(midecision, (150 + 115, 150 + 280))
     else:
@@ -200,29 +248,29 @@ def comodines(ventana: int, comodin_uno: str, comodin_dos: str, comodin_tres: st
     y_comodin3 = y_comodin2 + alto_comodin + 10
 
     if comodin_uno:
-        comodin1 = pygame.image.load(r"recursos\comodin1.png")
+        comodin1 = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\comodin1.png")
         comodin1 = pygame.transform.scale(comodin1, (ancho_comodin, alto_comodin))
         ventana.blit(comodin1, (x_comodin1, y_comodin1))
     else:
-        comodin1 = pygame.image.load(r"recursos\cruz.png")
+        comodin1 = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\cruz.png")
         comodin1 = pygame.transform.scale(comodin1, (ancho_comodin, alto_comodin))
         ventana.blit(comodin1, (x_comodin1, y_comodin1))
 
     if comodin_dos:
-        comodin2 = pygame.image.load(r"recursos\comodin2.png")
+        comodin2 = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\comodin2.png")
         comodin2 = pygame.transform.scale(comodin2, (ancho_comodin, alto_comodin))
         ventana.blit(comodin2, (x_comodin2, y_comodin2))
     else:
-        comodin2 = pygame.image.load(r"recursos\cruz.png")
+        comodin2 = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\cruz.png")
         comodin2 = pygame.transform.scale(comodin2, (ancho_comodin, alto_comodin))
         ventana.blit(comodin2, (x_comodin2, y_comodin2))
 
     if comodin_tres:
-        comodin3 = pygame.image.load(r"recursos\comodin3.png")
+        comodin3 = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\comodin3.png")
         comodin3 = pygame.transform.scale(comodin3, (ancho_comodin, alto_comodin))
         ventana.blit(comodin3, (x_comodin3, y_comodin3))
     else:
-        comodin3 = pygame.image.load(r"recursos\cruz.png")
+        comodin3 = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\cruz.png")
         comodin3 = pygame.transform.scale(comodin3, (ancho_comodin, alto_comodin))
         ventana.blit(comodin3, (x_comodin3, y_comodin3))
 
@@ -302,6 +350,7 @@ boton_decision = True
 color_decision = None
 preguntas = leer_preguntas("Preguntas.csv")
 contador_comodin_dos = 0
+contador_comodin_tres = 0
 contador_espera = 0
 comodin_uno = True
 comodin_dos = True
@@ -337,6 +386,7 @@ while bandera:
                         pregunta_resp = preguntas[pregunta_aleatoria]
                         estado = "segundo estado"
                         efecto_de_sonido()
+                        lista_jueces = decisiones_jueces(comodin_tres)
 
                 elif punto_vuelta.collidepoint(evento.pos):
                     estado = "principal"
@@ -352,7 +402,6 @@ while bandera:
                         color_decision = AZUL
                         boton_decision = False
                     estado = "tercer estado"
-                    lista_jueces = decisiones_jueces(comodin_tres)
                     efecto_de_sonido()
                     if respuestas_correctas <= 10:
                         respuestas_correctas +=1
@@ -364,6 +413,7 @@ while bandera:
                         lista_puntos.append(monedas_base)
                         pregunta_aleatoria = random.randint(0, len(preguntas) - 1)
                         pregunta_resp = preguntas[pregunta_aleatoria]
+                        
                     else:
                         estado = "eliminado"
                         derrota()
@@ -388,7 +438,6 @@ while bandera:
                         comodin_usado()
                 elif REC_COMODIN3.collidepoint(evento.pos):
                     if comodin_tres == True:
-                        lista_jueces = decision_jueces_comodin(comodin_tres)
                         comodin_tres = False
                         efecto_de_sonido()
                     else:
@@ -404,14 +453,14 @@ while bandera:
 
     if estado == "principal":
         tribuna()
-        jueces_funcion(None)
+        jueces_funcion([0,0,0,0,0] , comodin_tres)
         boton_jugar()
     elif estado == "segundo estado":
         if comodin_dos == False:
             contador_comodin_dos += 1
             if contador_comodin_dos < 100:
                 tribuna()
-                jueces_funcion(lista_jueces)
+                jueces_funcion(lista_jueces, comodin_tres)
             else:
                 decision_personaje(boton_decision, color_decision)
                 mi_personaje()
@@ -419,6 +468,13 @@ while bandera:
             decision_personaje(boton_decision, color_decision)
             mi_personaje()
             
+        if comodin_tres == False:
+            contador_comodin_tres += 1
+            if contador_comodin_tres < 60:
+                jueces_funcion(lista_jueces, comodin_tres)
+            else:
+                pass
+
         texto_pregunta(pregunta_resp["Pregunta"])
         comodines(ventana, comodin_uno, comodin_dos, comodin_tres)
         vuelta()
@@ -430,11 +486,12 @@ while bandera:
         
     elif estado == "tercer estado":
         tribuna()
-        jueces_funcion(lista_jueces)
+        jueces_funcion(lista_jueces, comodin_tres)
         ganador()
         contador_espera += 1
         bandera_espera = tiempo_espera(contador_espera, 3, fps)
         if bandera_espera :
+            lista_jueces = decisiones_jueces(comodin_tres)
             contador_espera = 0
             bandera_espera = not bandera_espera
             estado = "segundo estado"
@@ -445,6 +502,7 @@ while bandera:
         comodin_dos = True
         comodin_tres = True
         monedas_base = 0
+        contador_comodin_tres = 0
         respuestas_correctas = 0
         contador_espera += 1
         bandera_espera = tiempo_espera(contador_espera, 3, fps)
@@ -454,6 +512,7 @@ while bandera:
             estado = "principal"
         
     elif estado == "tiempo excedido":
+        contador_comodin_tres = 0
         fuera_de_tiempo()
         vuelta()
     
