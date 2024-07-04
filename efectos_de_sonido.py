@@ -20,7 +20,7 @@ def derrota():
 def comodin_usado():
     pygame.mixer.init()
     sonido_fondo = pygame.mixer.Sound(r"recursos\error windows.mp3")
-    sonido_fondo.set_volume(3.0)
+    sonido_fondo.set_volume(5.0)
     sonido_fondo.play()
 
 def respuesta_correcta_sonido():

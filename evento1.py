@@ -114,6 +114,7 @@ def jueces_decision(decision: list):
         retorna = ROJO
     else:
         retorna = AZUL
+
     return retorna
 
 def comprobacion(voto_jueces: list, mi_decision: tuple):
@@ -123,7 +124,6 @@ def comprobacion(voto_jueces: list, mi_decision: tuple):
     else:
         retorna = False
     return retorna
-
 
 def button_tot():
     #Todo lo relacionado con el button de this or that
@@ -288,6 +288,12 @@ def ganador():
     pygame.draw.rect(ventana, VERDE, aviso_ganador, 2)
     texto_ganador = FUENTE.render(f"Coincidiste con el publico!", False, NEGRO)
     ventana.blit(texto_ganador, (ganador_x + 60, ganador_y + 30))
+
+def grada_completa():
+    pass
+
+def grada_comodin():
+    pass
 
 bandera = True
 monedas_base = 0
