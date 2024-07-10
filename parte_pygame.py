@@ -3,11 +3,11 @@ import random
 from efectos_de_sonido import *
 from archivos import *
 from elementos import *
-from funcionalidad import *
+from especificas_evento import *
+
 pygame.init()
 
 tiempo_transcurrido = lambda contador, fps: contador // fps
-
 
 ANCHO_VENTANA = 700
 ALTO_VENTANA = 700
@@ -19,10 +19,15 @@ FUENTE = pygame.font.Font(None, 36)
 FUENTE_PORCENTAJE = pygame.font.Font(None, 30)
 
 ventana = pygame.display.set_mode(VENTANA1)
-pygame.display.set_caption("Tot or trivia")
 
-icono = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\logo.jpg")
-pygame.display.set_icon(icono)
+fuente = pygame.font.SysFont("consolas", 20)
+
+input = pygame.Rect(50,50,200,32)
+color_inactivo = AZUL
+color_activo = ROJO
+color = color_inactivo
+activo = False
+texto = ""
 
 #--------------------------------------------------------------------------------------------------------------
 #FUNCIONES ESENCIALES BOTONES, FONDOS, ETC
@@ -33,7 +38,7 @@ def fondo():
     Args:
         -
     """
-    fondo = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\fondo.jpg")
+    fondo = pygame.image.load(r"recursos\fondo.jpg")
     fondo = pygame.transform.scale(fondo, VENTANA1)
 
     ventana.blit(fondo, (0, 0))    
@@ -44,7 +49,7 @@ def tribuna():
     Args:
         -
     """
-    tribuna = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\tribuna_jueces.png")
+    tribuna = pygame.image.load(r"recursos\tribuna_jueces.png")
     tribuna = pygame.transform.scale(tribuna, (600, 500))
     ventana.blit(tribuna, (55, 85))
 
@@ -71,7 +76,7 @@ def monedas_contador(monedas_base: int):
         monedas_base: int: Numerico.
     """
     monedas = pygame.Rect(ANCHO_VENTANA - 100, 80, 100, 30)
-    moneda_icon = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\moneda.png")
+    moneda_icon = pygame.image.load(r"recursos\moneda.png")
     moneda_icon = pygame.transform.scale(moneda_icon, (40, 30))
 
     texto_monedas = FUENTE.render(str(monedas_base), True, BLANCO)
@@ -85,7 +90,7 @@ def vuelta():
     Args:
         -
     """
-    punto_vuelta = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\X_vuelta.png")
+    punto_vuelta = pygame.image.load(r"recursos\X_vuelta.png")
     punto_vuelta= pygame.transform.scale(punto_vuelta , (30, 30))
     ventana.blit(punto_vuelta, (ANCHO_VENTANA - 35, ALTO_VENTANA - 35))
 
@@ -116,10 +121,10 @@ def jueces_funcion(decision: list[tuple], comodin_tres: bool, contador: int):
     decision_y = 40
     coordenada_x = 100
     coordenada_y = 320
-    personajes = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\personaje.png")
+    personajes = pygame.image.load(r"recursos\personaje.png")
     personajes = pygame.transform.scale(personajes, (100, 150))
 
-    midecision = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\incognita.png")
+    midecision = pygame.image.load(r"recursos\incognita.png")
     midecision = pygame.transform.scale(midecision, (decision_x,decision_y))
 
     for i in range(len(decision)):
@@ -196,7 +201,7 @@ def mi_personaje():
     """
     x_personaje = 150
     y_personaje = 150
-    personajes = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\personaje.png")
+    personajes = pygame.image.load(r"recursos\personaje.png")
     personajes = pygame.transform.scale(personajes, (400, 600))
     ventana.blit(personajes,(x_personaje, y_personaje))
 
@@ -207,7 +212,7 @@ def decision_personaje(estado: bool, color: str):
         estado: bool: Devuelve True o False, color: str: String.
     """
     if estado:
-        midecision = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\incognita.png")
+        midecision = pygame.image.load(r"recursos\incognita.png")
         midecision = pygame.transform.scale(midecision, (160,140))
         ventana.blit(midecision, (150 + 115, 150 + 280))
     else:
@@ -259,29 +264,29 @@ def comodines(ventana: int, comodin_uno: bool, comodin_dos: bool, comodin_tres: 
     coordenadas_3 = (x_comodines, y_comodin3)
 
     if comodin_uno:
-        comodin1 = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\comodin1.png")
+        comodin1 = pygame.image.load(r"recursos\comodin1.png")
         comodin1 = pygame.transform.scale(comodin1, (ancho_comodin, alto_comodin))
         ventana.blit(comodin1, coordenadas_1)
     else:
-        comodin1 = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\cruz.png")
+        comodin1 = pygame.image.load(r"recursos\cruz.png")
         comodin1 = pygame.transform.scale(comodin1, (ancho_comodin, alto_comodin))
         ventana.blit(comodin1, coordenadas_1)
 
     if comodin_dos:
-        comodin2 = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\comodin2.png")
+        comodin2 = pygame.image.load(r"recursos\comodin2.png")
         comodin2 = pygame.transform.scale(comodin2, (ancho_comodin, alto_comodin))
         ventana.blit(comodin2, coordenadas_2)
     else:
-        comodin2 = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\cruz.png")
+        comodin2 = pygame.image.load(r"recursos\cruz.png")
         comodin2 = pygame.transform.scale(comodin2, (ancho_comodin, alto_comodin))
         ventana.blit(comodin2, coordenadas_2)
 
     if comodin_tres:
-        comodin3 = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\comodin3.png")
+        comodin3 = pygame.image.load(r"recursos\comodin3.png")
         comodin3 = pygame.transform.scale(comodin3, (ancho_comodin, alto_comodin))
         ventana.blit(comodin3, coordenadas_3)
     else:
-        comodin3 = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\cruz.png")
+        comodin3 = pygame.image.load(r"recursos\cruz.png")
         comodin3 = pygame.transform.scale(comodin3, (ancho_comodin, alto_comodin))
         ventana.blit(comodin3, coordenadas_3)
     
@@ -386,11 +391,11 @@ def pantalla_eliminado():
     imagen2_x = 550
     imagen2_y = 250
 
-    imagen1 = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\derrota1.jpg")
+    imagen1 = pygame.image.load(r"recursos\derrota1.jpg")
     imagen1 = pygame.transform.scale(imagen1, (imagen1_ancho, imagen1_alto))
     ventana.blit(imagen1, (imagen1_x, imagen1_y))
 
-    imagen2 = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\derrota2.jpg")
+    imagen2 = pygame.image.load(r"recursos\derrota2.jpg")
     imagen2 = pygame.transform.scale(imagen2, (imagen2_ancho, imagen2_alto))
     ventana.blit(imagen2, (imagen2_x, imagen2_y))
 
@@ -423,11 +428,11 @@ def ganador():
     imagen2_x = 500
     imagen2_y = 500
 
-    imagen1 = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\festejo1.jpg")
+    imagen1 = pygame.image.load(r"recursos\festejo1.jpg")
     imagen1 = pygame.transform.scale(imagen1, (imagen1_ancho, imagen1_alto))
     ventana.blit(imagen1, (imagen1_x, imagen1_y))
 
-    imagen2 = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\festejo2.jpg")
+    imagen2 = pygame.image.load(r"recursos\festejo2.jpg")
     imagen2 = pygame.transform.scale(imagen2, (imagen2_ancho, imagen2_alto))
     ventana.blit(imagen2, (imagen2_x, imagen2_y))
 
@@ -436,5 +441,26 @@ def ganador():
     pygame.draw.rect(ventana, VERDE, aviso_ganador, 2)
     texto_ganador = FUENTE.render(f"Coincidiste con el publico!", False, NEGRO)
     ventana.blit(texto_ganador, (ganador_x + 60, ganador_y + 30))
-
-
+    
+def caja_de_texto():
+    for evento in pygame.event.get():
+        if evento.type == pygame.KEYDOWN:
+            if activo:
+                if evento.key == pygame.K_BACKSPACE:
+                    texto = texto[:-1]
+                elif evento.key == pygame.K_ESCAPE:
+                    texto = ""
+                else:
+                    texto += evento.unicode
+                    
+        elif evento.type == pygame.MOUSEBUTTONDOWN:
+            if input.collidepoint(evento.pos):
+                activo = not activo
+            color = color_activo if activo else color_inactivo
+        
+    texto_superficie = fuente.render(texto, False, NEGRO)
+            
+    ventana.blit(texto_superficie, (input.x + 5, input.y + 5))
+    pygame.draw.rect(ventana, color, input, 2)
+        
+    pygame.display.update()    
