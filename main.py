@@ -5,10 +5,29 @@ Intregrantes: Nicolás Doyhenart, Santino Fernandez
 """""
 import pygame
 from parte_pygame import *
+
 lista_puntos = cargar_puntos()
 
-
 pygame.init()
+
+
+tiempo_transcurrido = lambda contador, fps: contador // fps
+
+
+ANCHO_VENTANA = 700
+ALTO_VENTANA = 700
+
+VENTANA1 = (ANCHO_VENTANA, ALTO_VENTANA)
+
+FUENTE = pygame.font.Font(None, 36)
+
+FUENTE_PORCENTAJE = pygame.font.Font(None, 30)
+
+ventana = pygame.display.set_mode(VENTANA1)
+pygame.display.set_caption("Tot or trivia")
+
+icono = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\logo.jpg")
+pygame.display.set_icon(icono)
 
 #--------------------------------------------------------------------------------------------------------------
 #VARIABLES PARA LA FUNCIONALIDAD DEL JUEGO
@@ -36,90 +55,91 @@ clock = pygame.time.Clock()
 musica_fondo()
 while bandera:
     for evento in pygame.event.get():
-        
-        if estado == "principal":
-            #Dependiendo del estado del juego, se habilitan los botones o no
-            input_tot = pygame.Rect(275, 500, 150, 90)
-        elif estado == "segundo estado":
-            punto_vuelta = pygame.Rect(ANCHO_VENTANA - 35, ALTO_VENTANA - 35, 30, 30)
-            button_rojo = pygame.Rect(100, 600, 250, 90)
-            button_azul = pygame.Rect(100 + 250, 600, 250, 90)
-            REC_COMODIN1 = pygame.Rect(10, 500, 30, 30)
-            REC_COMODIN2 = pygame.Rect(10, 540, 30, 30)
-            REC_COMODIN3 = pygame.Rect(10, 580, 30, 30)
+        try:
+            if estado == "principal":
+                #Dependiendo del estado del juego, se habilitan los botones o no
+                input_tot = pygame.Rect(275, 500, 150, 90)
+            elif estado == "segundo estado":
+                punto_vuelta = pygame.Rect(ANCHO_VENTANA - 35, ALTO_VENTANA - 35, 30, 30)
+                button_rojo = pygame.Rect(100, 600, 250, 90)
+                button_azul = pygame.Rect(100 + 250, 600, 250, 90)
+                REC_COMODIN1 = pygame.Rect(10, 500, 30, 30)
+                REC_COMODIN2 = pygame.Rect(10, 540, 30, 30)
+                REC_COMODIN3 = pygame.Rect(10, 580, 30, 30)
 
-        if evento.type == pygame.QUIT:
-            #Salida del juego por la "X" 
-            bandera = False
-        elif evento.type == pygame.MOUSEBUTTONDOWN:
-            #Cuando detecta que se apreta en click izq del mouse, 
-            #elige como proseguir dependiendo donde toco(que boton)
-            if input_tot.collidepoint(evento.pos):
-                if estado == "principal":
+            if evento.type == pygame.QUIT:
+                #Salida del juego por la "X" 
+                bandera = False
+            elif evento.type == pygame.MOUSEBUTTONDOWN:
+                #Cuando detecta que se apreta en click izq del mouse, 
+                #elige como proseguir dependiendo donde toco(que boton)
+                if input_tot.collidepoint(evento.pos):
+                    if estado == "principal":
+                        contador = 0
+                        pregunta_aleatoria = random.randint(0, len(preguntas) - 1)
+                        pregunta_resp = preguntas[pregunta_aleatoria]
+                        estado = "segundo estado"
+                        efecto_de_sonido()
+                        lista_jueces = decisiones_jueces(5)
+
+                elif punto_vuelta.collidepoint(evento.pos):
+                    estado = "principal"
+                    boton_decision = True
+                    efecto_de_sonido()
+
+                elif button_rojo.collidepoint(evento.pos) or button_azul.collidepoint(evento.pos):
                     contador = 0
-                    pregunta_aleatoria = random.randint(0, len(preguntas) - 1)
-                    pregunta_resp = preguntas[pregunta_aleatoria]
-                    estado = "segundo estado"
+                    if button_rojo.collidepoint(evento.pos):
+                        color_decision = ROJO
+                        boton_decision = False
+                    elif button_azul.collidepoint(evento.pos):
+                        color_decision = AZUL
+                        boton_decision = False
+                    estado = "tercer estado"
                     efecto_de_sonido()
-                    lista_jueces = decisiones_jueces(5)
+                    if respuestas_correctas <= 10:
+                        respuestas_correctas +=1
+                    
+                    comprobar_eleccion = comprobacion(lista_jueces, color_decision)
+                    if comprobar_eleccion:
+                        respuesta_correcta_sonido()
+                        monedas_base = monedas_incrementales(PUNTOS, monedas_base, respuestas_correctas)
+                        lista_puntos.append(monedas_base)
+                        pregunta_aleatoria = random.randint(0, len(preguntas) - 1)
+                        pregunta_resp = preguntas[pregunta_aleatoria]
+                    else:
+                        estado = "eliminado"
+                        derrota()
 
-            elif punto_vuelta.collidepoint(evento.pos):
-                estado = "principal"
-                boton_decision = True
-                efecto_de_sonido()
+                elif REC_COMODIN1.collidepoint(evento.pos):
+                    if comodin_uno == True:
+                        contador = 0
+                        pregunta_aleatoria = random.randint(0, len(preguntas) - 1)
+                        pregunta_resp = preguntas[pregunta_aleatoria]
+                        comodin_uno = False
+                        efecto_de_sonido()
+                    else:
+                        comodin_usado()
 
-            elif button_rojo.collidepoint(evento.pos) or button_azul.collidepoint(evento.pos):
-                contador = 0
-                if button_rojo.collidepoint(evento.pos):
-                    color_decision = ROJO
-                    boton_decision = False
-                elif button_azul.collidepoint(evento.pos):
-                    color_decision = AZUL
-                    boton_decision = False
-                estado = "tercer estado"
-                efecto_de_sonido()
-                if respuestas_correctas <= 10:
-                    respuestas_correctas +=1
-                
-                comprobar_eleccion = comprobacion(lista_jueces, color_decision)
-                if comprobar_eleccion:
-                    respuesta_correcta_sonido()
-                    monedas_base = monedas_incrementales(PUNTOS, monedas_base, respuestas_correctas)
-                    lista_puntos.append(monedas_base)
-                    pregunta_aleatoria = random.randint(0, len(preguntas) - 1)
-                    pregunta_resp = preguntas[pregunta_aleatoria]
-                else:
-                    estado = "eliminado"
-                    derrota()
+                elif REC_COMODIN2.collidepoint(evento.pos):
+                    if comodin_dos == True:
+                        contador = 0
+                        lista_jueces = decisiones_jueces(5)
+                        respuestas_correctas += 1
+                        monedas_base = monedas_incrementales(PUNTOS, monedas_base, respuestas_correctas)
+                        comodin_dos = False
+                        efecto_de_sonido()
+                    else:
+                        comodin_usado()
 
-            elif REC_COMODIN1.collidepoint(evento.pos):
-                if comodin_uno == True:
-                    contador = 0
-                    pregunta_aleatoria = random.randint(0, len(preguntas) - 1)
-                    pregunta_resp = preguntas[pregunta_aleatoria]
-                    comodin_uno = False
-                    efecto_de_sonido()
-                else:
-                    comodin_usado()
-
-            elif REC_COMODIN2.collidepoint(evento.pos):
-                if comodin_dos == True:
-                    contador = 0
-                    lista_jueces = decisiones_jueces(5)
-                    respuestas_correctas += 1
-                    monedas_base = monedas_incrementales(PUNTOS, monedas_base, respuestas_correctas)
-                    comodin_dos = False
-                    efecto_de_sonido()
-                else:
-                    comodin_usado()
-
-            elif REC_COMODIN3.collidepoint(evento.pos):
-                if comodin_tres == True:
-                    comodin_tres = False
-                    efecto_de_sonido()
-                else:
-                    comodin_usado()
-    
+                elif REC_COMODIN3.collidepoint(evento.pos):
+                    if comodin_tres == True:
+                        comodin_tres = False
+                        efecto_de_sonido()
+                    else:
+                        comodin_usado()
+        except:
+            pass
         
     """Esta parte llama a las funciones que se encargan de ilustrar los botones, fondo, y partes
     visuales del programa. Esto dependiendo del estado en que este el programa."""
@@ -210,3 +230,4 @@ while bandera:
     pygame.display.flip()
 
 pygame.quit()
+

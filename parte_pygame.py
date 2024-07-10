@@ -62,6 +62,8 @@ def boton_jugar():
     pygame.draw.circle(ventana, ROJO, centro, radio)
     ventana.blit(texto_superficie, rectangulo_texto)
 
+    
+
 def monedas_contador(monedas_base: int):
     """Grafica interactiva de las monedas.
 
@@ -174,10 +176,11 @@ def cuadro_porcentaje(decision):
     cuadro_porcentaje_rojo = pygame.Rect(cuadro_porcentaje_x + ancho_azul, cuadro_porcentaje_y, ancho_rojo, cuadro_porcentaje_alto)
     pygame.draw.rect(ventana, ROJO, cuadro_porcentaje_rojo)
 
-    texto_porcentaje_azul = FUENTE_PORCENTAJE.render(f"{porcentaje_tupla[1]}%", False, NEGRO)
-    ventana.blit(texto_porcentaje_azul, (cuadro_porcentaje_x + cuadro_porcentaje_ancho - 55, cuadro_porcentaje_y + 20))
-    texto_porcentaje_rojo = FUENTE_PORCENTAJE.render(f"{porcentaje_tupla[0]}%", False, NEGRO)
-    ventana.blit(texto_porcentaje_rojo, (cuadro_porcentaje_x + 5, cuadro_porcentaje_y + 20))
+    texto_porcentaje_rojo = FUENTE_PORCENTAJE.render(f"{porcentaje_tupla[1]}%", False, NEGRO)
+    ventana.blit(texto_porcentaje_rojo, (cuadro_porcentaje_x + cuadro_porcentaje_ancho - 55, cuadro_porcentaje_y + 20))
+
+    texto_porcentaje_azul = FUENTE_PORCENTAJE.render(f"{porcentaje_tupla[0]}%", False, NEGRO)
+    ventana.blit(texto_porcentaje_azul, (cuadro_porcentaje_x + 5, cuadro_porcentaje_y + 20))
 
     cuadro_porcentaje = pygame.Rect(cuadro_porcentaje_x, cuadro_porcentaje_y, cuadro_porcentaje_ancho, cuadro_porcentaje_alto)
     pygame.draw.rect(ventana, NEGRO, cuadro_porcentaje, 2)
@@ -243,43 +246,51 @@ def comodines(ventana: int, comodin_uno: bool, comodin_dos: bool, comodin_tres: 
     Args:
         ventana: int: Numerico, comodin_uno: Bandera, comodin_dos: Bandera, comodin_tres: Bandera.
     """
-    x_caja = 10
+    x_comodines = 10
     y_caja = 500
     ancho_comodin = 30
     alto_comodin = 30
-    x_comodin1 = x_caja
     y_comodin1 = y_caja
-    x_comodin2 = x_caja
     y_comodin2 = y_comodin1 + alto_comodin + 10
-    x_comodin3 = x_caja
     y_comodin3 = y_comodin2 + alto_comodin + 10
+
+    coordenadas_1 = (x_comodines, y_comodin1)
+    coordenadas_2 = (x_comodines, y_comodin2)
+    coordenadas_3 = (x_comodines, y_comodin3)
 
     if comodin_uno:
         comodin1 = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\comodin1.png")
         comodin1 = pygame.transform.scale(comodin1, (ancho_comodin, alto_comodin))
-        ventana.blit(comodin1, (x_comodin1, y_comodin1))
+        ventana.blit(comodin1, coordenadas_1)
     else:
         comodin1 = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\cruz.png")
         comodin1 = pygame.transform.scale(comodin1, (ancho_comodin, alto_comodin))
-        ventana.blit(comodin1, (x_comodin1, y_comodin1))
+        ventana.blit(comodin1, coordenadas_1)
 
     if comodin_dos:
         comodin2 = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\comodin2.png")
         comodin2 = pygame.transform.scale(comodin2, (ancho_comodin, alto_comodin))
-        ventana.blit(comodin2, (x_comodin2, y_comodin2))
+        ventana.blit(comodin2, coordenadas_2)
     else:
         comodin2 = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\cruz.png")
         comodin2 = pygame.transform.scale(comodin2, (ancho_comodin, alto_comodin))
-        ventana.blit(comodin2, (x_comodin2, y_comodin2))
+        ventana.blit(comodin2, coordenadas_2)
 
     if comodin_tres:
         comodin3 = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\comodin3.png")
         comodin3 = pygame.transform.scale(comodin3, (ancho_comodin, alto_comodin))
-        ventana.blit(comodin3, (x_comodin3, y_comodin3))
+        ventana.blit(comodin3, coordenadas_3)
     else:
         comodin3 = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\cruz.png")
         comodin3 = pygame.transform.scale(comodin3, (ancho_comodin, alto_comodin))
-        ventana.blit(comodin3, (x_comodin3, y_comodin3))
+        ventana.blit(comodin3, coordenadas_3)
+    
+    boton_comodin_1 = pygame.Rect(x_comodines, y_comodin1, ancho_comodin, alto_comodin)
+    boton_comodin_2 = pygame.Rect(x_comodines, y_comodin2, ancho_comodin, alto_comodin)
+    boton_comodin_3 = pygame.Rect(x_comodines, y_comodin3, ancho_comodin, alto_comodin)
+
+
+
 
 def texto_pregunta(pregunta: str):
     """Grafica para las preguntas.
@@ -314,6 +325,7 @@ def tiempo(contador: int, limite_tiempo: int, fps: int):
     pygame.draw.rect(ventana, NEGRO, temporizador)
     text_tiempo = FUENTE.render(f"{contador // 20}", True, BLANCO)
     ventana.blit(text_tiempo, (time_x + 10, time_y + 5))
+    
     retorna = False
     tiempo_real = tiempo_transcurrido(contador, fps)
     if tiempo_real >= limite_tiempo:
