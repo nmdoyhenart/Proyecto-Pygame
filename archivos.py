@@ -6,9 +6,8 @@ Intregrantes: Nicolás Doyhenart, Santino Fernandez
 import json
 # Archivo JSON para acumular y cargar los puntos
 
-# Cargar puntos
 def cargar_puntos():
-    """Carga los puntos al archivo JSON una vez que lo encuentra
+    """Carga los puntos del archivo JSON una vez que lo encuentra.
 
     Args:
         -
@@ -17,19 +16,20 @@ def cargar_puntos():
         with open("Puntos.json", "r") as archivo:
             aux = json.load(archivo)
             return aux["Puntos"]
-    except (FileNotFoundError):
+    except FileNotFoundError:
         return []
+    
 
-# Guardar puntos
-def guardar_puntos(lista_puntos: list):
-    """Almacena, en este caso, los puntos en el archivo JSON.
+def guardar_puntos(puntos_existentes: list):
+    """Almacena los puntos en el archivo JSON, agregando los nuevos puntos a los existentes.
 
     Args:
-        lista_puntos: list: Lista donde se encuentran los datos
+        lista_puntos (list): Lista donde se encuentran los datos, cada uno siendo una tupla con un string y un entero.
     """
-    puntos_dict = {"Puntos": lista_puntos}
+   
+    puntos_dict = {"Puntos": puntos_existentes}
     with open("Puntos.json", "w") as archivo:
-        json.dump(puntos_dict, archivo, indent = 4)
+        json.dump(puntos_dict, archivo, indent=4)
 
 
 # Función para guardar las preguntas en un archivo CSV
@@ -59,3 +59,36 @@ def leer_preguntas(nombre_archivo: str)-> list[dict]:
             lista_leida.append({"Pregunta": pregunta, "Opciones": [opciones_uno, opciones_dos]})
 
     return lista_leida
+
+
+
+
+
+
+def cargar_puntos():
+    """Carga los puntos del archivo JSON una vez que lo encuentra.
+
+    Args:
+        -
+    """
+    try:
+        with open("Puntos.json", "r") as archivo:
+            aux = json.load(archivo)
+            return aux["Puntos"]
+    except FileNotFoundError:
+        return []
+    
+
+def guardar_puntos(puntos_existentes: list):
+    """Almacena los puntos en el archivo JSON, agregando los nuevos puntos a los existentes.
+
+    Args:
+        lista_puntos (list): Lista donde se encuentran los datos, cada uno siendo una tupla con un string y un entero.
+    """
+   
+    puntos_dict = {"Puntos": puntos_existentes}
+    with open("Puntos.json", "w") as archivo:
+        json.dump(puntos_dict, archivo, indent=4)
+
+
+
