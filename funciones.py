@@ -6,6 +6,19 @@ from archivos import *
 
 pygame.init()
 
+ANCHO_VENTANA = 700
+ALTO_VENTANA = 700
+
+VENTANA_DIMENSION = (ANCHO_VENTANA, ALTO_VENTANA)
+
+fuente = pygame.font.Font(None, 36)
+
+fuente_porcentaje = pygame.font.Font(None, 30)
+
+ventana = pygame.display.set_mode(VENTANA_DIMENSION)
+
+color_contorno = NEGRO
+
 def titulo_ventana():
     pygame.display.set_caption("Tot or trivia")
 
@@ -43,6 +56,7 @@ def funcion_principal(FUENTE, ventana, evento, estado):
             if input.collidepoint(evento.pos):
                 inicio = True
                 efecto_de_sonido()
+                
     return inicio
 
 def rojo_azul(FUENTE, ventana, opcion_roja, opcion_azul):
@@ -108,7 +122,7 @@ def decision_personaje(ventana, estado: bool, color: str):
         pygame.draw.rect(ventana, color, mi_decision)
 
 
-def start_play(FUENTE, ventana, evento, dimension, pregunta_aleatoria):
+def inicio_juego(FUENTE, ventana, evento, dimension, pregunta_aleatoria):
     """Crea los dos botones para seleccionar las opciones.
 
     Args:
@@ -367,3 +381,50 @@ def tribuna(ventana):
     tribuna = pygame.image.load(r"recursos\tribuna_jueces.png")
     tribuna = pygame.transform.scale(tribuna, (600, 500))
     ventana.blit(tribuna, (55, 85))
+
+ancho_caja = 400
+alto_caja = 100
+y_caja = 270
+x_caja = 150
+rect_caja = pygame.Rect(x_caja, y_caja, ancho_caja, alto_caja)
+color_inactivo = pygame.Color('lightskyblue3')
+color_activo = pygame.Color('dodgerblue2')
+color_fondo = pygame.Color('white')
+texto_caja = ""
+activo = False
+
+def manejar_caja_texto(eventos, texto, rect, color_inactivo, color_activo, fuente, ventana, activo):
+    if activo:
+        color = color_activo
+    else:
+        color = color_inactivo
+
+    for evento in eventos:
+        if evento.type == pygame.KEYDOWN:
+            if activo:
+                if evento.key == pygame.K_BACKSPACE:
+                    texto = texto[:-1]
+                elif evento.key == pygame.K_ESCAPE:
+                    texto = ""
+                else:
+                    texto += evento.unicode
+        if evento.type == pygame.MOUSEBUTTONDOWN:
+            if rect.collidepoint(evento.pos):
+                activo = not activo
+
+    pygame.draw.rect(ventana, color_fondo, rect)
+    pygame.draw.rect(ventana, color, rect, 2)
+
+    texto_superficie = fuente.render(texto, True, (0, 0, 0))
+    texto_rect = texto_superficie.get_rect(center=(rect.x + rect.width / 2, rect.y + rect.height / 2))
+    ventana.blit(texto_superficie, texto_rect.topleft)
+
+    return texto, activo
+
+def ingrese_nombre():
+    input = pygame.Rect(275, 200, 150, 90)
+    texto = "¡Ingrese su nombre!"
+    texto_superficie = fuente.render(texto, True, BLANCO)
+    contorno_superficie = fuente.render(texto, True, color_contorno)
+    rectangulo_texto = texto_superficie.get_rect(center = input.center)
+    ventana.blit(texto_superficie, rectangulo_texto)
