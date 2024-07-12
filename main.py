@@ -6,22 +6,20 @@ Intregrantes: Nicolás Doyhenart, Santino Fernandez
 import pygame
 import time
 from archivos import *
-from parte_pygame import *
+from funciones_base import *
+from funciones_de_tiempo import *
+from funciones_ver_top import *
+from funciones_estado_principal import *
+from funciones_segundo_estado import *
+from funciones_tercer_estado import *
+from funciones_ganar_o_perder import *
 
 
-ancho_ventana = 700
-alto_ventana = 700
-ventana_dimension = (ancho_ventana, alto_ventana)
-
-ventana = pygame.display.set_mode(ventana_dimension)
-pygame.display.set_caption("Tot or trivia")
-
+ventana, ventana_dimension = crear_ventana()
+icono_ventana()
+titulo_ventana()
 fuente = pygame.font.Font(None, 36)
-
 fuente_porcentaje = pygame.font.Font(None, 30)
-
-icono = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\logo.jpg")
-pygame.display.set_icon(icono)
 
 lista_jugadores = cargar_puntos()
 preguntas = leer_preguntas("Preguntas.csv")
@@ -53,7 +51,7 @@ while bandera:
         texto_caja, activo = manejar_caja_texto(eventos, texto_caja, rect_caja, color_inactivo, color_activo, fuente, ventana, activo)
         pregunta_aleatoria = random.randint(0, len(preguntas) - 1)
         inicio = funcion_principal(fuente, ventana, evento, estado)
-        estado = boton_top(ventana, fuente, evento, estado)
+        estado = dibujar_boton_top(ventana, fuente, evento, estado)
         if inicio:
             if texto_caja == "":
                 texto_caja = "Jugador"
