@@ -4,7 +4,7 @@
 ---------------------------------------------------------
 
 Markdown 🎮🎯:
-
+<li> 1- Ingresar el nombre del usuario
 <li> 1- Inciar el juego, con el boton "Jugar". <li> 
 2- El juego le mostrará una pregunta aleatoria y usted tendrá que seleccionar alguna de las dos opciones que aparecen debajo de la misma cuestion-
 <li> 3- El publico votará, y aleatoriamente, decidirá cual es la opcion valida.<li> 
