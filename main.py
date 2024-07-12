@@ -6,14 +6,13 @@ Intregrantes: Nicolás Doyhenart, Santino Fernandez
 import pygame
 import time
 from archivos import *
-from funciones_base import *
-from funciones_de_tiempo import *
-from funciones_ver_top import *
-from funciones_estado_principal import *
-from funciones_segundo_estado import *
-from funciones_tercer_estado import *
-from funciones_ganar_o_perder import *
-
+from funciones_baseCOMENTADA import *
+from funciones_de_tiempoCOMENTADA import *
+from funciones_ver_topCOMENTADA import *
+from funciones_estado_principalCOMENTADA import *
+from funciones_segundo_estadoCOMENTADO import *
+from funciones_tercer_estadoCOMENTADA import *
+from funciones_ganar_o_perderCOMENTADO import *
 
 ventana, ventana_dimension = crear_ventana()
 icono_ventana()
@@ -96,7 +95,7 @@ while bandera:
         if estado == "tercer estado":
             tiempo_muerto = time.time()
 
-        volver = vuelta(ventana, ventana_dimension, evento)
+        volver = punto_vuelta(ventana, ventana_dimension, evento)
         if volver:
             estado = "principal" 
     elif estado == "tercer estado":
@@ -137,7 +136,7 @@ while bandera:
                 jugador_puntos = []
     elif estado == "top jugadores":
         top_cinco(ventana, fuente, lista_jugadores)
-        volver = vuelta(ventana, ventana_dimension, evento)
+        volver = punto_vuelta(ventana, ventana_dimension, evento)
         if volver:
             estado = "principal" 
 

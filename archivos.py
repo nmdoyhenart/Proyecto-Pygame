@@ -18,7 +18,6 @@ def cargar_puntos():
             return aux["Puntos"]
     except FileNotFoundError:
         return []
-    
 
 def guardar_puntos(puntos_existentes: list):
     """Almacena los puntos en el archivo JSON, agregando los nuevos puntos a los existentes.
