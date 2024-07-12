@@ -1,17 +1,16 @@
 import pygame
 from elementos import *
+from funciones_base import *
+
 
 def dibujar_boton_top(ventana, fuente, evento, estado):
     x = 50
     y = 50
     boton_altura = 50
     boton_ancho = 115
-
-    top = pygame.Rect(x, y, boton_ancho, boton_altura)
-    pygame.draw.rect(ventana, ROJO_CLARO, top)
-    pygame.draw.rect(ventana, NEGRO, top, 2)
-    texto_superficie = fuente.render(f"VER TOP", True, BLANCO)
-    ventana.blit(texto_superficie, (top.x + 5, top.y + 5))
+    tupla_dimensiones = (x, y, boton_ancho, boton_altura)
+    texto_boton = "VER TOP"
+    top = dibujar_boton_rectang(ventana, tupla_dimensiones, fuente, texto_boton, ROJO_CLARO)
     if evento.type == pygame.MOUSEBUTTONDOWN:
         if top.collidepoint(evento.pos):
             estado = "top jugadores"

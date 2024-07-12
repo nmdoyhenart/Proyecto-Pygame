@@ -14,7 +14,6 @@ x_caja = 150
 rect_caja = pygame.Rect(x_caja, y_caja, ancho_caja, alto_caja)
 color_inactivo = pygame.Color('lightskyblue3')
 color_activo = pygame.Color('dodgerblue2')
-# color_fondo = pygame.Color('white')
 texto_caja = ""
 activo = False
 
@@ -34,8 +33,19 @@ def crear_ventana():
     ventana = pygame.display.set_mode(ventana_dimension)
     return ventana, ventana_dimension
 
+def dibujar_boton_rectang(ventana, tupla_dimensiones, fuente, texto_boton, color_boton):
+    x = tupla_dimensiones[0]
+    y = tupla_dimensiones[1]
+    boton_ancho = tupla_dimensiones[2]
+    boton_alto = tupla_dimensiones[3]
 
-
+    boton = pygame.Rect(x, y, boton_ancho, boton_alto)
+    pygame.draw.rect(ventana, color_boton, boton)
+    pygame.draw.rect(ventana, NEGRO, boton, 2)
+    texto_superficie = fuente.render(f"{texto_boton}", True, BLANCO)
+    ventana.blit(texto_superficie, (boton.x + 5, boton.y + 5))
+    
+    return boton
 
 def monedas_incrementales(puntos: list, monedas_base: int, posicion: int):
     """Actualiza constantemente las monedas haciendolas incrementales.
