@@ -6,32 +6,27 @@ Intregrantes: Nicolás Doyhenart, Santino Fernandez
 import pygame
 import time
 from archivos import *
-# from funciones_modificadas import *
-#from funciones_base import *
 from parte_pygame import *
-lista_jugadores = cargar_puntos()
-
-tiempo_transcurrido = lambda contador, fps: contador // fps
 
 
-ANCHO_VENTANA = 700
-ALTO_VENTANA = 700
+ancho_ventana = 700
+alto_ventana = 700
+ventana_dimension = (ancho_ventana, alto_ventana)
 
-ventana_dimension = (ANCHO_VENTANA, ALTO_VENTANA)
+ventana = pygame.display.set_mode(ventana_dimension)
+pygame.display.set_caption("Tot or trivia")
 
 fuente = pygame.font.Font(None, 36)
 
 fuente_porcentaje = pygame.font.Font(None, 30)
 
-ventana = pygame.display.set_mode(ventana_dimension)
-pygame.display.set_caption("Tot or trivia")
-
 icono = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\logo.jpg")
 pygame.display.set_icon(icono)
 
+lista_jugadores = cargar_puntos()
+preguntas = leer_preguntas("Preguntas.csv")
 bandera = True
 estado = "principal"
-preguntas = leer_preguntas("Preguntas.csv")
 monedas_base = 0
 respuestas_correctas = 0
 color_decision = None
@@ -43,31 +38,29 @@ habilitar_comodin_tres = 0
 contador_tiempo = 0
 puntos = [50, 100, 200, 250, 300, 400, 500, 600, 750, 1000]
 
-
 pygame.init()
-
 
 while bandera:
     fondo(ventana, ventana_dimension)
     monedas_contador(monedas_base, ventana_dimension[0], fuente, ventana)
     
     eventos = pygame.event.get()
-
     for evento in eventos:
         if evento.type == pygame.QUIT:
             bandera = False
-
     if estado == "principal":
         ingrese_nombre(fuente, ventana)
         texto_caja, activo = manejar_caja_texto(eventos, texto_caja, rect_caja, color_inactivo, color_activo, fuente, ventana, activo)
         pregunta_aleatoria = random.randint(0, len(preguntas) - 1)
         inicio = funcion_principal(fuente, ventana, evento, estado)
+        estado = boton_top(ventana, fuente, evento, estado)
         if inicio:
+            if texto_caja == "":
+                texto_caja = "Jugador"
             estado = "segundo estado"
         jugador_puntos = [texto_caja, monedas_base]
         
     elif estado == "segundo estado":
-
         juego = arranque_juego(fuente, ventana, evento, pregunta_aleatoria)
 
         back_comodines = comodines(ventana, comodin_uno, comodin_dos, comodin_tres, evento, estado)
@@ -90,7 +83,6 @@ while bandera:
             if comodin_dos == False:
                 pregunta_aleatoria = random.randint(0, len(preguntas) - 1)
                 tiempo_comodin_dos = time.time()
-        
         if comodin_tres != back_comodines[2]:
             comodin_tres = back_comodines[2]
             if comodin_tres == False:
@@ -102,7 +94,6 @@ while bandera:
                     pygame.display.flip()
                     time.sleep(2)
                     contador_tiempo = 10
-            
                 
         if estado == "tercer estado":
             tiempo_muerto = time.time()
@@ -111,7 +102,6 @@ while bandera:
         if volver:
             estado = "principal" 
     elif estado == "tercer estado":
-
         tiempo_actual = time.time()
 
         if comodin_dos == True:
@@ -125,7 +115,6 @@ while bandera:
                 comprobar_eleccion = estado_tres(ventana, fuente_porcentaje, color_decision, lista_jueces, comodin_tres, contador_tiempo)
 
         habilitar_sonido = ganar_perder(ventana, fuente, comprobar_eleccion, habilitar_sonido)
-
         transcurrido = tiempo_actual - tiempo_muerto
         if transcurrido >= 3:
             if comprobar_eleccion:
@@ -145,10 +134,14 @@ while bandera:
                 comodin_tres = True
                 habilitar_comodin_tres = 0
                 estado = "principal"
+                texto_caja = ""
                 monedas_base = 0
                 jugador_puntos = []
-        
-    
-    pygame.display.flip()
+    elif estado == "top jugadores":
+        top_cinco(ventana, fuente, lista_jugadores)
+        volver = vuelta(ventana, ventana_dimension, evento)
+        if volver:
+            estado = "principal" 
 
+    pygame.display.flip()
 pygame.quit()

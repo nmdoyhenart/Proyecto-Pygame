@@ -12,7 +12,7 @@ def efecto_de_sonido():
         -
     """
     pygame.mixer.init()
-    sonido_fondo = pygame.mixer.Sound(r"recursos\pop.mp3")
+    sonido_fondo = pygame.mixer.Sound(r"TP-PYGAME-COLLAB-main\recursos\pop.mp3")
     sonido_fondo.set_volume(0.7)
     sonido_fondo.play()
 
@@ -23,7 +23,7 @@ def derrota():
         -
     """
     pygame.mixer.init()
-    sonido_fondo = pygame.mixer.Sound(r"recursos\error.mp3")
+    sonido_fondo = pygame.mixer.Sound(r"TP-PYGAME-COLLAB-main\recursos\error.mp3")
     sonido_fondo.set_volume(0.7)
     sonido_fondo.play()
 
@@ -34,7 +34,7 @@ def comodin_usado():
         -
     """
     pygame.mixer.init()
-    sonido_fondo = pygame.mixer.Sound(r"recursos\error windows.mp3")
+    sonido_fondo = pygame.mixer.Sound(r"TP-PYGAME-COLLAB-main\recursos\error windows.mp3")
     sonido_fondo.set_volume(5.0)
     sonido_fondo.play()
 
@@ -45,7 +45,7 @@ def respuesta_correcta_sonido():
         -
     """
     pygame.mixer.init()
-    sonido_fondo = pygame.mixer.Sound(r"recursos\respuesta_correcta.mp3")
+    sonido_fondo = pygame.mixer.Sound(r"TP-PYGAME-COLLAB-main\recursos\respuesta_correcta.mp3")
     sonido_fondo.set_volume(0.7)
     sonido_fondo.play()
 
@@ -56,6 +56,6 @@ def musica_fondo():
         -
     """
     pygame.mixer.init()
-    musica__fondo_siempre = pygame.mixer.Sound(r"recursos\musica de fondo.mp3")
+    musica__fondo_siempre = pygame.mixer.Sound(r"TP-PYGAME-COLLAB-main\recursos\musica de fondo.mp3")
     musica__fondo_siempre.set_volume(0.01)
     musica__fondo_siempre.play()
