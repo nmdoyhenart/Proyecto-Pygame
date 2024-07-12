@@ -65,30 +65,5 @@ def leer_preguntas(nombre_archivo: str)-> list[dict]:
 
 
 
-def cargar_puntos():
-    """Carga los puntos del archivo JSON una vez que lo encuentra.
-
-    Args:
-        -
-    """
-    try:
-        with open("Puntos.json", "r") as archivo:
-            aux = json.load(archivo)
-            return aux["Puntos"]
-    except FileNotFoundError:
-        return []
-    
-
-def guardar_puntos(puntos_existentes: list):
-    """Almacena los puntos en el archivo JSON, agregando los nuevos puntos a los existentes.
-
-    Args:
-        lista_puntos (list): Lista donde se encuentran los datos, cada uno siendo una tupla con un string y un entero.
-    """
-   
-    puntos_dict = {"Puntos": puntos_existentes}
-    with open("Puntos.json", "w") as archivo:
-        json.dump(puntos_dict, archivo, indent=4)
-
 
 
