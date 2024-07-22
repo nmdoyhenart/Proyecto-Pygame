@@ -1,51 +1,68 @@
 import pygame
+import time
 from elementos import *
+from funciones_base import *
 
-tiempo_transcurrido = lambda contador, fps: contador // fps
+tiempo_transcurrido = lambda tiempo_actual, tiempo_inicial: tiempo_actual - tiempo_inicial
 
-def tiempo(ventana, FUENTE: str, contador: int, limite_tiempo: int, fps: int):
+
+def tiempo(ventana, FUENTE, tiempo_actual: int, tiempo_inicial: int, limite_tiempo: int):
     """Grafico para mostrar el contador.
 
     Args:
-        ventana: surface: Superficie, FUENTE: str: String, contador: int: Numerico, limite_tiempo: int: Numerico, fps: int: Numerico.
+        ventana (surface): _description_
+        FUENTE (font): _description_
+        tiempo_actual (int): _description_
+        limite_tiempo (int): _description_
+        tiempo_inicial (int): _description_
+
+    Returns:
+        _type_: _description_
     """
     time_x = 5
     time_y = 5
     time_ancho = 40
     time_alto = 30
-    temporizador = pygame.Rect(time_x, time_y, time_ancho, time_alto)
+    escalar_imagen(ventana, (30,30), (time_x,time_y), r"TP-PYGAME-COLLAB-main\recursos\tiempo corriendo.png")
+    temporizador = pygame.Rect(time_x + 30, time_y, time_ancho, time_alto)
     pygame.draw.rect(ventana, NEGRO, temporizador)
-    text_tiempo = FUENTE.render(f"{contador // 20}", True, BLANCO)
-    ventana.blit(text_tiempo, (time_x + 10, time_y + 5))
+    tiempo_contadoor = round(tiempo_actual - tiempo_inicial)
+    text_tiempo = FUENTE.render(f"{tiempo_contadoor}", True, BLANCO)
+    ventana.blit(text_tiempo, (time_x + 40, time_y + 5))
     
     retorna = False
-    tiempo_real = tiempo_transcurrido(contador, fps)
+    tiempo_real = tiempo_transcurrido(tiempo_actual, tiempo_inicial)
     if tiempo_real >= limite_tiempo:
         retorna = True
     return retorna
-    
-def tiempo_espera(contador_espera: int, limite: int, fps: int):
+
+
+def tiempo_espera(database: dict, limite: int, lista_jugadores, jugador_puntos):
     """Calcula el tiempo en el cual te hecha del programa.
 
     Args:
-        contador_espera: int: Numerico, limite: int: Numerico, fps: int: Numerico.
+        database: dict, limite: int: Numerico, fps: int: Numerico.
     """
+    tiempo_actual = time.time()
+
     retorna = False
-    tiempo_real = tiempo_transcurrido(contador_espera, fps)
+    tiempo_real = tiempo_transcurrido(tiempo_actual, database["tiempo para responder"] )
     if tiempo_real >= limite:
+        lista_jugadores.append(jugador_puntos)
+        guardar_puntos("Puntos.json",lista_jugadores)
         retorna = True
     return retorna
 
-def fuera_de_tiempo(ventana: int, FUENTE: str):
+
+def fuera_de_tiempo(ventana, fuente):
     """Grafica que notifica la expulsión del programa.
     Args:
-        ventana: int: Numerico, FUENTE: str: String
+        ventana (surface): _description_
+        fuente (font): _description_
     """
-    eliminado_x = 200
-    eliminado_y = 350
-    eliminado_ancho = 400
+    eliminado_x = 125
+    eliminado_y = 520
+    eliminado_ancho = 450
     eliminado_alto = 35
-    eliminacion_cuadro = pygame.Rect(eliminado_x, eliminado_y, eliminado_ancho, eliminado_alto)
-    pygame.draw.rect(ventana, NEGRO, eliminacion_cuadro)
-    text_eliminacion = FUENTE.render(f"Usted ha excedido el tiempo y perdio.", True, BLANCO)
-    ventana.blit(text_eliminacion, (eliminado_x + 10, eliminado_y + 5))
+    dibujar_boton_rectang(ventana, (eliminado_x, eliminado_y, eliminado_ancho, eliminado_alto), fuente, "Usted ha excedido el tiempo y perdio", ROJO_CLARO)
+    escalar_imagen(ventana, (260, 360), (220, 170), r"TP-PYGAME-COLLAB-main\recursos\TIME OUT.png")
