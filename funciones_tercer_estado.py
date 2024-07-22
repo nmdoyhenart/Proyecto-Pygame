@@ -5,8 +5,7 @@ from archivos import *
 from elementos import *
 from efectos_de_sonido import *
 
-
-def estado_tres(ventana: int, fuente: str, color_decision: str, lista_jueces: list, comodin_tres: bool, contador_tiempo: int):
+def estado_tres(ventana, fuente: str, color_decision: str, lista_jueces: list, comodin_tres: bool, contador_tiempo: int):
     """Lo relacionado con el tercer estado.
 
    Args:
