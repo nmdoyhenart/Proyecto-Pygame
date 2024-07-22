@@ -88,7 +88,7 @@ def botones_comodines(diccionario_botones: dict, evento, comodin_uno: bool, como
     REC_COMODIN1 = diccionario_botones["boton_comodin_1"]
     REC_COMODIN2 = diccionario_botones["boton_comodin_2"]
     REC_COMODIN3 = diccionario_botones["boton_comodin_3"]
-    
+
     if evento.type == pygame.MOUSEBUTTONDOWN:
         if REC_COMODIN1.collidepoint(evento.pos):
             if comodin_uno == True:
@@ -194,7 +194,7 @@ def activar_comodin_tres(ventana, comodin_tres: bool, back_comodines: dict, habi
                 funcion_comodin_tres(ventana, lista_jueces, comodin_tres, contador_tiempo)
             if contador_tiempo == 0:
                 pygame.display.flip()
-                time.sleep(2)
+                pygame.time.delay(2500)
                 contador_tiempo = 10
     back_comodin_tres = {"comodin_tres": comodin_tres,
                          "habilitar_comodin": habilitar_comodin_tres,

@@ -115,10 +115,9 @@ def manejar_caja_texto(eventos, texto, color_inactivo, color_activo, fuente, ven
             if rect.collidepoint(evento.pos):
                 activo = not activo
 
-
     pygame.draw.rect(ventana, BLANCO, rect)
     pygame.draw.rect(ventana, color, rect, 2)
-    texto_superficie = fuente.render(texto, True, (0, 0, 0))
+    texto_superficie = fuente.render(texto.title(), True, (0, 0, 0))
     texto_rect = texto_superficie.get_rect(center=(rect.x + rect.width / 2, rect.y + rect.height / 2))
     ventana.blit(texto_superficie, texto_rect.topleft)
 
