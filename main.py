@@ -6,13 +6,13 @@ Intregrantes: Nicolás Doyhenart, Santino Fernandez
 import pygame
 import time
 from archivos import *
-from funciones_baseCOMENTADA import *
-from funciones_de_tiempoCOMENTADA import *
-from funciones_ver_topCOMENTADA import *
-from funciones_estado_principalCOMENTADA import *
-from funciones_segundo_estadoCOMENTADO import *
-from funciones_tercer_estadoCOMENTADA import *
-from funciones_ganar_o_perderCOMENTADO import *
+from funciones_base import *
+from funciones_de_tiempo import *
+from funciones_ver_top import *
+from funciones_estado_principal import *
+from funciones_segundo_estado import *
+from funciones_tercer_estado import *
+from funciones_ganar_o_perder import *
 
 ventana, ventana_dimension = crear_ventana()
 icono_ventana()
