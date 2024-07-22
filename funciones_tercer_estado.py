@@ -19,7 +19,7 @@ def estado_tres(ventana, fuente: str, color_decision: str, lista_jueces: list, c
     return comprobar_eleccion
 
 def funcion_comodin_tres(ventana, lista_jueces: list, comodin_tres: bool, contador_tiempo: int):
-    """Lo relacionado con el tercer estado.
+    """Funcionamiento del tercer comodin.
 
    Args:
         ventana: surface: Superficie, lista_jueces: list: Lista, comodin_tres: bool: Bandera, contador_tiempo: int: Numerico.
@@ -27,8 +27,8 @@ def funcion_comodin_tres(ventana, lista_jueces: list, comodin_tres: bool, contad
     tribuna(ventana)
     jueces_funcion(ventana, lista_jueces, comodin_tres, contador_tiempo)
 
-def ganar_perder(ventana, fuente: str, comprobar_eleccion, habilitar_sonido):
-    """Lo relacionado con el tercer estado.
+def efecto_sonido_ganar_perder(ventana, fuente: str, comprobar_eleccion, habilitar_sonido):
+    """Habilita el funcionamiento de los efectos de sonido.
 
    Args:
         ventana: surface: Superficie, fuente: str: String, comprobar_eleccion, habilitar_sonido
