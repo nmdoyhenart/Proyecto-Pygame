@@ -1,12 +1,16 @@
+"""""
+TP GRUPAL PYGAME
+
+Intregrantes: Nicolás Doyhenart, Santino Fernandez
+"""""
 import pygame
 from elementos import *
 
-
-def ganador(ventana, FUENTE):
+def pantalla_ganador(ventana, FUENTE):
     """Se muestra si el publico coincidio con tu respuesta.
+
     Args:
-        ventana (surface): _description_
-        fuente (font): _description_
+        ventana: surface: Superficie, FUENTE: font: Fuente python.
     """ 
     ganador_ancho = 400
     ganardor_alto = 100
@@ -26,11 +30,11 @@ def ganador(ventana, FUENTE):
     imagen2_x = 500
     imagen2_y = 500
 
-    imagen1 = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\festejo1.jpg")
+    imagen1 = pygame.image.load(r"recursos\festejo1.jpg")
     imagen1 = pygame.transform.scale(imagen1, (imagen1_ancho, imagen1_alto))
     ventana.blit(imagen1, (imagen1_x, imagen1_y))
 
-    imagen2 = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\festejo2.jpg")
+    imagen2 = pygame.image.load(r"recursos\festejo2.jpg")
     imagen2 = pygame.transform.scale(imagen2, (imagen2_ancho, imagen2_alto))
     ventana.blit(imagen2, (imagen2_x, imagen2_y))
 
@@ -40,13 +44,11 @@ def ganador(ventana, FUENTE):
     texto_ganador = FUENTE.render(f"Coincidiste con el publico!", False, NEGRO)
     ventana.blit(texto_ganador, (ganador_x + 60, ganador_y + 30))
 
-
 def pantalla_eliminado(ventana, FUENTE):
-    """Aviso de descalificación.
+    """Se muestra si el publico no coincidio con tu respuesta.
 
    Args:
-        ventana (surface): superficie de la pantalla
-        fuente (font): fuente del texto
+        ventana: surface: superficie, FUENTE: font: fuente python.
     """
     eliminado_ancho = 400
     eliminado_alto = 160
@@ -66,11 +68,11 @@ def pantalla_eliminado(ventana, FUENTE):
     imagen2_x = 550
     imagen2_y = 500
 
-    imagen1 = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\derrota1.jpg")
+    imagen1 = pygame.image.load(r"recursos\derrota1.jpg")
     imagen1 = pygame.transform.scale(imagen1, (imagen1_ancho, imagen1_alto))
     ventana.blit(imagen1, (imagen1_x, imagen1_y))
 
-    imagen2 = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\derrota2.jpg")
+    imagen2 = pygame.image.load(r"recursos\derrota2.jpg")
     imagen2 = pygame.transform.scale(imagen2, (imagen2_ancho, imagen2_alto))
     ventana.blit(imagen2, (imagen2_x, imagen2_y))
 
@@ -79,15 +81,11 @@ def pantalla_eliminado(ventana, FUENTE):
     texto_eliminado = FUENTE.render(f"PERDISTE :P", False, BLANCO)
     ventana.blit(texto_eliminado, (eliminado_x + 100, eliminado_y + 60))
 
-
 def reiniciar_main(database: dict):
     """Reinicia el diccionario `database`, volviendo a una version inicial.
 
     Args:
-        database (dict): diccionario que se va a reiniciar
-
-    Returns:
-        dict: el mismo dict `database` pero ya reiniciado al estado inicial
+        database: dict: diccionario.
     """
     database["respuestas_correctas"] = 0
     database["contador_tiempo"] = 0

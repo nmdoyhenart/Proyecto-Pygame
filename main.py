@@ -71,6 +71,7 @@ while bandera:
         volver = boton_vuelta(ventana, ventana_dimension, evento)
         if volver:
             database["estado"] = "principal" 
+
     elif database["estado"] == "tiempo excedido":
         fuera_de_tiempo(ventana, fuente)
         tiempo_fuera = tiempo_espera(database, 4, lista_jugadores, jugador_puntos)

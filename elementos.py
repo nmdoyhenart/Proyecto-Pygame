@@ -1,3 +1,8 @@
+"""""
+TP GRUPAL PYGAME
+
+Intregrantes: Nicolás Doyhenart, Santino Fernandez
+"""""
 from archivos import *
 
 BLANCO = (255, 255, 255)

@@ -1,4 +1,8 @@
+"""""
+TP GRUPAL PYGAME
 
+Intregrantes: Nicolás Doyhenart, Santino Fernandez
+"""""
 import pygame
 import random
 from funciones_base import *
@@ -8,22 +12,11 @@ from archivos import *
 from funciones_ver_top import *
 
 #------------------------------------------------------------------------------------------------------------------
-def funcion_principal(ventana, fuente, eventos, evento, preguntas, monedas_base, estado, activo, nombre_jugador):
-    """_summary_
+def funcion_principal(ventana, fuente, eventos: list, evento, preguntas, monedas_base: int, estado: str, activo: bool, nombre_jugador: str):
+    """Funcion que contiene la columna principal del juego.
 
     Args:
-        ventana (surface): _description_
-        fuente: font: fuente que usara el texto
-        eventos (list): lista de los eventos que se esta llevando a cabo
-        evento (event): evento que se esta llevando a cabo
-        preguntas (_type_): _description_
-        monedas_base (int): cantidad de monedas
-        estado (_type_): _description_
-        activo: bool
-        nombre_jugador (str): nombre del jugador ingresado
-
-    Returns:
-        _type_: _description_
+        ventana: surface: superficie, fuente: font: fuente python, eventos: list: lista, evento: event: Evento, preguntas: list: Lista, monedas_base: int: Numerico, estado: str: String, activo: bool: Booleano, nombre_jugador: str: String.
     """
     ingrese_nombre(fuente, ventana, activo)
     nombre_jugador, activo = manejar_caja_texto(eventos, nombre_jugador, AZUL_CLARO, AZUL, fuente, ventana, activo)
@@ -41,12 +34,11 @@ def funcion_principal(ventana, fuente, eventos, evento, preguntas, monedas_base,
                    "input_nombre": activo} 
     return back_inicio
 
-
-def boton_inicio(FUENTE, ventana, evento, estado):
+def boton_inicio(FUENTE, ventana, evento, estado: str):
     """Boton para comenzar el juego.
 
     Args:
-        -
+        FUENTE: font: Fuente python, ventana: surface: Superficie, evento: event: Evento, estado: str: String
     """
     if estado == "principal":
         centro = (350,549)
@@ -64,14 +56,11 @@ def boton_inicio(FUENTE, ventana, evento, estado):
                 efecto_de_sonido()
     return inicio
 
-
-def ingrese_nombre(fuente, ventana, activo):
+def ingrese_nombre(fuente, ventana, activo: bool):
     """Función que grafica un texto guia.
 
     Args:
-        fuente: font: fuente que usara el texto
-        ventana: surface: superficie de la pantalla
-        activo: bool
+        fuente: font: fuente python, ventana: surface: superficie, activo: bool: Booleano.
     """
     input = pygame.Rect(275, 200, 150, 90)
     texto = "¡Ingrese su nombre!"
@@ -84,11 +73,11 @@ def ingrese_nombre(fuente, ventana, activo):
     rectangulo_texto = texto_superficie.get_rect(center = input.center)
     ventana.blit(texto_superficie, rectangulo_texto)
 
+def manejar_caja_texto(eventos, texto: str, color_inactivo, color_activo, fuente, ventana, activo: bool):
+    """Implementa un cuadro de texto interactivo.
 
-def manejar_caja_texto(eventos, texto, color_inactivo, color_activo, fuente, ventana, activo):
-    """Función que implementa un cuadro de texto interactivo.
     Args:
-        eventos, texto, color_inactivo, color_activo, fuente, ventana, activo
+        eventos: event: Evento, texto: str: String, color_inactivo, color_activo, fuente: font: Fuente python, ventana: surface: Superficie, activo: bool: Booleano.
     """
     ancho_caja = 400
     alto_caja = 100
@@ -124,35 +113,24 @@ def manejar_caja_texto(eventos, texto, color_inactivo, color_activo, fuente, ven
     return texto, activo
 
 #-------------------------------------------------------------------------------------------------------------------
-
-
-
-
-def monedas_contador(monedas_base, ANCHO_VENTANA, FUENTE, ventana):
+def monedas_contador(monedas_base: int, ANCHO_VENTANA: int, FUENTE, ventana):
     """Grafica interactiva de las monedas.
+
     Args:
-        monedas_base (int): cantidad de monedas
-        ANCHO_VENTANA (int): ancho de la ventana/pantalla
-        FUENTE (font): _description_
-        ventana (surface): _description_
+        monedas_base: int: Numerico, ANCHO_VENTANA: int: Numerico, FUENTE: font: Fuente python, ventana: surface: superficie.
     """
     monedas = pygame.Rect(ANCHO_VENTANA - 100, 80, 100, 30)
 
     texto_monedas = FUENTE.render(str(monedas_base), True, BLANCO)
     pygame.draw.rect(ventana, NEGRO, monedas, 0)
     ventana.blit(texto_monedas, (monedas.x + 5, monedas.y + 3 ))
-    escalar_imagen(ventana, (45, 30),(ANCHO_VENTANA - 35, 80), r"TP-PYGAME-COLLAB-main\recursos\moneda.png")
+    escalar_imagen(ventana, (45, 30),(ANCHO_VENTANA - 35, 80), r"recursos\moneda.png")
 
-
-def boton_vuelta(ventana, dimension, evento):
+def boton_vuelta(ventana, dimension: tuple, evento):
     """Punto de retorno para volver al menu principal.
-    Args:
-        ventana (surface): _description_
-        dimension (tuple): tupla con ancho y alto de la ventana
-        evento (event): evento que se esta llevando a cabo
 
-    Returns:
-        bool: retorna un booleano dependiendo si toco o no el boton de vuelta
+    Args:
+        ventana: surface: Superficie, dimension: tuple: tupla, evento: event: evento.
     """
     ancho_ventana = dimension[0]
     alto_ventana = dimension[1]
@@ -162,7 +140,7 @@ def boton_vuelta(ventana, dimension, evento):
     alto = 30
     vuelta_boton = pygame.Rect(x, y, ancho, alto)
 
-    punto_vuelta = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\X_vuelta.png")
+    punto_vuelta = pygame.image.load(r"recursos\X_vuelta.png")
     punto_vuelta= pygame.transform.scale(punto_vuelta , (ancho, alto))
     ventana.blit(punto_vuelta, (x, y))
     retorno = False
@@ -170,5 +148,3 @@ def boton_vuelta(ventana, dimension, evento):
         if vuelta_boton.collidepoint(evento.pos):
             retorno = True
     return retorno
-
-

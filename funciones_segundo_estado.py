@@ -1,3 +1,8 @@
+"""""
+TP GRUPAL PYGAME
+
+Intregrantes: Nicolás Doyhenart, Santino Fernandez
+"""""
 import pygame
 import random
 from funciones_base import dibujar_boton_rectang
@@ -6,18 +11,11 @@ from archivos import *
 from elementos import *
 from efectos_de_sonido import *
 
-
-def arranque_juego(fuente, ventana, evento, pregunta_aleatoria, database):
-    """funcion que arranca y ejecuta el juego
+def arranque_juego(fuente, ventana, evento, pregunta_aleatoria: int, database: dict):
+    """Funcion que ejecuta el juego
 
     Args:
-        fuente (font): fuente usada en el juego
-        ventana (surface): superficie donde se desarrolla el juego
-        evento (event): evento actual que se esta realizando
-        pregunta_aleatoria (int): numero aleatorio de la posicion de 
-        la pregunta que se va a mostrar
-    Returns:
-        dict: diccionario con los cambios que ocurren en la funcion
+        fuente: font: fuente python, ventana: surface: superficie, evento: event: Evento, pregunta_aleatoria: int: Numerico, database: dict: Diccionario.
     """
     estado = "segundo estado"
     preguntas = database["preguntas"]
@@ -50,15 +48,11 @@ def arranque_juego(fuente, ventana, evento, pregunta_aleatoria, database):
 
     return retorna
 
-
-def rojo_azul(fuente, ventana, opcion_roja, opcion_azul):
+def rojo_azul(fuente, ventana, opcion_roja: str, opcion_azul: str):
     """Función que crea ambos botones
 
     Args:
-        fuente: font: fuente de las cadenas del juego
-        ventana: surface: superficie del juego
-        opcion_roja: str: opcion que se muestra en el boton rojo
-        opcion_azul: str: opcion que se muestra en el boton azul.
+        fuente: font: fuente python, ventana: surface: superficie, opcion_roja: str: String, opcion_azul: str: String.
     """   
     x = 100
     y = 600
@@ -72,15 +66,11 @@ def rojo_azul(fuente, ventana, opcion_roja, opcion_azul):
 
     return (rojo, azul)
 
-
 def texto_pregunta(pregunta: str, ventana, fuente):
     """Grafica para las preguntas.
 
     Args:
-        pregunta: str: String.
-        ventana: surface: superficie del juego
-        fuente: font: fuente de las cadenas del juego
-
+        pregunta: str: String, ventana: surface: Superficie, fuente: font: fuente python.
     """
     ancho = 500
     alto = 50
@@ -92,7 +82,6 @@ def texto_pregunta(pregunta: str, ventana, fuente):
     texto_preg = fuente.render(f"{pregunta}", True, NEGRO)
     ventana.blit(texto_preg, (x + 3, y + 15))
 
-
 def mi_personaje(ventana):
     """Creación de la interfaz del personaje.
 
@@ -101,27 +90,23 @@ def mi_personaje(ventana):
         """
     x_personaje = 150
     y_personaje = 150
-    personajes = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\personaje.png")
+    personajes = pygame.image.load(r"recursos\personaje.png")
     personajes = pygame.transform.scale(personajes, (400, 600))
     ventana.blit(personajes,(x_personaje, y_personaje))
 
-
-def decision_personaje(ventana, estado: bool, color):
-    """Comprueba si el título existe y lo elimina de la lista.
+def decision_personaje(ventana, estado: bool, color: tuple):
+    """Muestra la decision del personaje principal.
 
     Args:
-        ventana: surface: superficie del juego
-        estado: bool: recibe True o False
-        color: tuple: color que se pinta de acuerdo a la decision del usuario
+        ventana: surface: Superficie, estado: bool: Booleano, color: tuple: Tupla.
     """
     if estado:
-        midecision = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\incognita.png")
+        midecision = pygame.image.load(r"recursos\incognita.png")
         midecision = pygame.transform.scale(midecision, (160,140))
         ventana.blit(midecision, (150 + 115, 150 + 280))
     else:
         mi_decision = pygame.Rect(150 + 115, 150 + 280, 160,140)
         pygame.draw.rect(ventana, color, mi_decision)
-
 
 def decisiones_jueces(iteraciones: int):
     """Función que selecciona aleatoriamente las respuestas.
@@ -136,6 +121,3 @@ def decisiones_jueces(iteraciones: int):
         lista_decisiones.append(respuestas[decision])
 
     return lista_decisiones
-
-
-

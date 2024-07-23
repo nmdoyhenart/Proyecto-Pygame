@@ -1,3 +1,8 @@
+"""""
+TP GRUPAL PYGAME
+
+Intregrantes: Nicolás Doyhenart, Santino Fernandez
+"""""
 import pygame
 import random
 import time
@@ -6,17 +11,14 @@ from efectos_de_sonido import *
 from funciones_tercer_estado import *
 from funciones_segundo_estado import *
 
-
-def dibujar_comodines(ventana: int, comodin_uno: bool, comodin_dos: bool, comodin_tres: bool, evento, estado: str)-> dict:
+def dibujar_comodines(ventana, comodin_uno, comodin_dos, comodin_tres, evento, estado: str)-> dict:
     """Comprueba si el título existe y lo elimina de la lista.
 
     Args:
-        ventana: surface
-        comodin_uno: bool
-        comodin_dos: bool
-        comodin_tres: bool
-        evento: event
-        estado: str:
+        ventana: surface: Superficie, comodin_uno: flag: Bandera, comodin_dos: flag: Bandera, comodin_tres: flag: Bandera, evento: event: Evento, estado: str: String.
+    
+    Returns:
+        -> dict: Diccionario.
     """
     ancho_comodin = 30
     alto_comodin = 30
@@ -41,49 +43,37 @@ def dibujar_comodines(ventana: int, comodin_uno: bool, comodin_dos: bool, comodi
 
     return back
 
-
-def alternar_comodines(ventana, comodin_uno, comodin_dos, comodin_tres, dimension_comodin, coordenadas):
-    """al accionarse los comodines, reemplaza sus iconos con una cruz roja
+def alternar_comodines(ventana, comodin_uno, comodin_dos, comodin_tres, dimension_comodin: tuple, coordenadas: tuple):
+    """Dibuja lo grafico de los comodines, incluso el comodin usado.
 
     Args:
-        ventana (surface): superficie donde se ejecuta  el juego
-        comodin_uno (bool): bandera que muestra si el comodin esta activo o ya fue usado
-        comodin_dos (bool): bandera que muestra si el comodin esta activo o ya fue usado
-        comodin_tres (bool): bandera que muestra si el comodin esta activo o ya fue usado
-        dimension_comodin (tuple): tupla con las dimenciones de ancho y alto de los botones de los comodines
-        coordenadas (tuple): tupla con las coordenadas de los comodines
+        ventana: surface: superficie, comodin_uno: flag: bandera, comodin_dos: flag: bandera, comodin_tres: flag: bandera, dimension_comodin: tuple: tupla, coordenadas: tuple: tupla.
     """
     coordenadas_1 = coordenadas[0]
     coordenadas_2 = coordenadas[1]
     coordenadas_3 = coordenadas[2]
 
     if comodin_uno:
-        escalar_imagen(ventana, dimension_comodin, coordenadas_1, r"TP-PYGAME-COLLAB-main\recursos\comodin1.png")
+        escalar_imagen(ventana, dimension_comodin, coordenadas_1, r"recursos\comodin1.png")
     else:
-        escalar_imagen(ventana, dimension_comodin, coordenadas_1, r"TP-PYGAME-COLLAB-main\recursos\cruz.png")
+        escalar_imagen(ventana, dimension_comodin, coordenadas_1, r"recursos\cruz.png")
     if comodin_dos:
-        escalar_imagen(ventana, dimension_comodin, coordenadas_2, r"TP-PYGAME-COLLAB-main\recursos\comodin2.png")
+        escalar_imagen(ventana, dimension_comodin, coordenadas_2, r"recursos\comodin2.png")
     else:
-        escalar_imagen(ventana, dimension_comodin, coordenadas_2, r"TP-PYGAME-COLLAB-main\recursos\cruz.png")
+        escalar_imagen(ventana, dimension_comodin, coordenadas_2, r"recursos\cruz.png")
     if comodin_tres:
-        escalar_imagen(ventana, dimension_comodin, coordenadas_3, r"TP-PYGAME-COLLAB-main\recursos\comodin3.png")
+        escalar_imagen(ventana, dimension_comodin, coordenadas_3, r"recursos\comodin3.png")
     else:
-        escalar_imagen(ventana, dimension_comodin, coordenadas_3, r"TP-PYGAME-COLLAB-main\recursos\cruz.png")
+        escalar_imagen(ventana, dimension_comodin, coordenadas_3, r"recursos\cruz.png")
 
-
-def botones_comodines(diccionario_botones: dict, evento, comodin_uno: bool, comodin_dos: bool, comodin_tres: bool, estado: str)-> dict:
-    """funcion que capta cuando un comodin es accionado y procede a llamar a su ejecucion de ser asi
+def botones_comodines(diccionario_botones: dict, evento, comodin_uno, comodin_dos, comodin_tres, estado: str)-> dict:
+    """funcion que capta cuando un comodin es accionado y procede a llamar a su ejecucion de ser asi.
 
     Args:
-        diccionario_botones (dict): diccionario con los rect/surface de los comodines
-        evento (event): evento que se realiza en la actualidad
-        comodin_uno (bool): bandera que muestra si el comodin esta activo o ya fue usado
-        comodin_dos (bool): bandera que muestra si el comodin esta activo o ya fue usado
-        comodin_tres (bool): bandera que muestra si el comodin esta activo o ya fue usado
-        estado (str): estado actual del programa
+        diccionario_botones: dict: diccionario, evento: event: evento, comodin_uno: flag: bandera, comodin_dos: flag: bandera, comodin_tres: flag: bandera, estado: str: String.
 
     Returns:
-        dict: _description_
+        dict: Diccionario
     """
     REC_COMODIN1 = diccionario_botones["boton_comodin_1"]
     REC_COMODIN2 = diccionario_botones["boton_comodin_2"]
@@ -119,18 +109,11 @@ def botones_comodines(diccionario_botones: dict, evento, comodin_uno: bool, como
 
     return back
 
-
-def activar_comodin_uno(comodin_uno: bool, back_comodines: dict, preguntas: list, pregunta_aleatoria: int):
+def activar_comodin_uno(comodin_uno, back_comodines: dict, preguntas: list, pregunta_aleatoria: int):
     """funcion que activa el uso del comodin uno
 
     Args:
-        comodin_uno (bool): bandera que muestra si el comodin esta activo o ya fue usado
-        back_comodines (dict): diccionario que actualiza si el comodin fue usado
-        preguntas (list): lista de las preguntas y respuestas
-        pregunta_aleatoria (int): posicion aleatoria de la pregunta actual
-
-    Returns:
-        dict: diccionario que ejecuta el accionar del comodin uno
+        comodin_uno: flag: bandera, back_comodines: dict: diccionario, preguntas: list: lista, pregunta_aleatoria: int: Numerico.
     """
     if comodin_uno != back_comodines["comodin_uno"] :
         comodin_uno = back_comodines["comodin_uno"]
@@ -141,18 +124,11 @@ def activar_comodin_uno(comodin_uno: bool, back_comodines: dict, preguntas: list
     return back_comodin_uno
 
 
-def activar_comodin_dos(comodin_dos: bool, back_comodines: dict, estado: str, preguntas: list, pregunta_aleatoria: int):
+def activar_comodin_dos(comodin_dos, back_comodines: dict, estado: str, preguntas: list, pregunta_aleatoria: int):
     """funcion de activacion del comodin dos
 
     Args:
-        comodin_dos (bool): bandera que muestra si el comodin esta activo o ya fue usado
-        back_comodines (dict): diccionario que actualiza si el comodin fue usado
-        estado (str): estado que se muestra del juego
-        preguntas (list): lista de las preguntas y respuestas
-        pregunta_aleatoria (int): posicion aleatoria de la pregunta actual
-
-    Returns:
-        dict: diccionario que ejecuta el accionar del comodin dos
+        comodin_dos: flag: bandera, back_comodines: dict: diccionario, estado: str: String, preguntas: list: lista, pregunta_aleatoria: int: Numerico.
     """
     tiempo_comodin_dos = 0
     if comodin_dos != back_comodines["comodin_dos"] :
@@ -167,23 +143,11 @@ def activar_comodin_dos(comodin_dos: bool, back_comodines: dict, estado: str, pr
                         "tiempo_comodin": tiempo_comodin_dos}
     return back_comodin_dos
 
-
-
-
-def activar_comodin_tres(ventana, comodin_tres: bool, back_comodines: dict, habilitar_comodin_tres: int, contador_tiempo: int, lista_jueces: list):
-    """funcion de activacion del comodin dos
-
+def activar_comodin_tres(ventana, comodin_tres, back_comodines: dict, habilitar_comodin_tres: int, contador_tiempo: int, lista_jueces: list):
+    """funcion de activacion del comodin tres
 
     Args:
-        ventana (surface): _description_
-        comodin_tres (bool):  bandera que muestra si el comodin esta activo o ya fue usado
-        back_comodines (dict): diccionario que actualiza si el comodin fue usado
-        habilitar_comodin_tres (int): auxiliar del comodin tres
-        contador_tiempo (int): tiempo que se muestra el comodin
-        lista_jueces (list): lista actual de jueces
-
-    Returns:
-        _type_: _description_
+        ventana: surface: Superficie, comodin_tres: flag: bandera, back_comodines: dict: diccionario, habilitar_comodin_tres: int: Numerico, contador_tiempo: int: Numerico, lista_jueces: list: lista.
     """
     if comodin_tres != back_comodines["comodin_tres"]:
         comodin_tres = back_comodines["comodin_tres"]

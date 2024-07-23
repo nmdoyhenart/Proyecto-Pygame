@@ -1,3 +1,8 @@
+"""""
+TP GRUPAL PYGAME
+
+Intregrantes: Nicolás Doyhenart, Santino Fernandez
+"""""
 import pygame
 from funciones_ganar_o_perder import *
 from funciones_base import *
@@ -5,12 +10,11 @@ from archivos import *
 from elementos import *
 from efectos_de_sonido import *
 
-
-def activar_estado_tres(ventana, fuente, color_decision, lista_jueces, comodin_tres, contador_tiempo):
+def activar_estado_tres(ventana, fuente, color_decision: str, lista_jueces: list, comodin_tres, contador_tiempo: int):
     """Lo relacionado con el tercer estado.
 
    Args:
-        ventana: int: Numerico, fuente: str: String, color_decision: str: String, lista_jueces: list: Lista, comodin_tres: bool: Bandera, contador_tiempo: int: Numerico.
+        ventana: surface: Superficie, fuente: font: Fuente python, color_decision: str: String, lista_jueces: list: Lista, comodin_tres: flag: Bandera, contador_tiempo: int: Numerico.
     """
     tribuna(ventana)
     jueces_funcion(ventana, lista_jueces, comodin_tres, contador_tiempo)
@@ -19,62 +23,59 @@ def activar_estado_tres(ventana, fuente, color_decision, lista_jueces, comodin_t
 
     return comprobar_eleccion
 
-
-def funcion_comodin_tres(ventana, lista_jueces, comodin_tres, contador_tiempo):
-    """Lo relacionado con el tercer estado.
+def funcion_comodin_tres(ventana, lista_jueces: list, comodin_tres, contador_tiempo: int):
+    """Funcionamiento del tercer comodin.
 
    Args:
-        ventana: surface: superficie, lista_jueces: list: Lista, comodin_tres: bool: Bandera, contador_tiempo: int: Numerico.
+        ventana: surface: Superficie, lista_jueces: list: Lista, comodin_tres: flag: Bandera, contador_tiempo: int: Numerico.
     """
     tribuna(ventana)
     jueces_funcion(ventana, lista_jueces, comodin_tres, contador_tiempo)
 
-
-def ganar_perder(ventana, fuente, comprobar_eleccion, habilitar_sonido):
-    """Lo relacionado con el tercer estado.
+def efecto_de_sonido_ganar_perder(ventana, fuente, comprobar_eleccion, habilitar_sonido: int):
+    """Comprobación para activar efecto de sonido.
 
    Args:
-        ventana: surface: superficie, fuente: str: String, comprobar_eleccion, habilitar_sonido
+        ventana: surface: Superficie, fuente: font: Fuente python, comprobar_eleccion, habilitar_sonido: int: Numerico.
     """
-
     if comprobar_eleccion:
         if habilitar_sonido == 0:
             respuesta_correcta_sonido()
-        ganador(ventana, fuente)
+        pantalla_ganador(ventana, fuente)
     else:
         if habilitar_sonido == 0:
             derrota()
         pantalla_eliminado(ventana, fuente)
 
     habilitar_sonido += 1
-    return habilitar_sonido
 
+    return habilitar_sonido
 
 def tribuna(ventana):
     """Función que implementa la tribuna en el juego en todo momento.
 
     Args:
-        -
+        ventana: Surface
     """
-    tribuna = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\tribuna_jueces.png")
+    tribuna = pygame.image.load(r"recursos\tribuna_jueces.png")
     tribuna = pygame.transform.scale(tribuna, (600, 500))
     ventana.blit(tribuna, (55, 85))
 
 
-def jueces_funcion(ventana, lista_jueces: list[tuple], comodin_tres: bool, contador_tiempo: int):
+def jueces_funcion(ventana, lista_jueces: list[tuple], comodin_tres, contador_tiempo: int):
     """Muestra la votación de los jueces, rojo o azul.
 
     Args:
-        decision: list[tuple]: Busca dentro de la lista la tupla decision, comodin_tres: bool: Bandera
+        ventana: surface: Superficie, lista_jueces: list[tuple]: Busca dentro de la lista la tupla decision, comodin_tres: flag: Bandera, contador_tiempo: int: Numerico.
     """
     decision_x = 40
     decision_y = 40
     coordenada_x = 100
     coordenada_y = 320
-    personajes = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\personaje.png")
+    personajes = pygame.image.load(r"recursos\personaje.png")
     personajes = pygame.transform.scale(personajes, (100, 150))
 
-    midecision = pygame.image.load(r"TP-PYGAME-COLLAB-main\recursos\incognita.png")
+    midecision = pygame.image.load(r"recursos\incognita.png")
     midecision = pygame.transform.scale(midecision, (decision_x,decision_y))
 
     for i in range(len(lista_jueces)):
@@ -106,13 +107,12 @@ def jueces_funcion(ventana, lista_jueces: list[tuple], comodin_tres: bool, conta
     for i in range(len(lista_jueces)):
         ventana.blit(personajes, (coordenada_x, 250))
         coordenada_x += 100
-
     
-def cuadro_porcentaje(ventana, fuente_porcentaje, decision):
-    """Grafica el porcentaje de la decision de los jueces
+def cuadro_porcentaje(ventana, fuente_porcentaje, decision: list):
+    """Grafica el porcentaje de la decision de los jueces mediante una barra.
 
     Args:
-        decision (list): lista de la decision de los jueces
+        ventana: surface: Superficie, fuente_porcentaje: font: Fuente, decision: list: Lista.
     """
     porcentaje_tupla = porcentaje_decision(decision)
 

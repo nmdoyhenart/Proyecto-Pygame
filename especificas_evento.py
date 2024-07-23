@@ -34,6 +34,11 @@ def jueces_decision(decision: list):
     return retorna
 
 def comprobacion(voto_jueces: list, mi_decision: tuple):
+    """Comprueba los votos de los jueces y los retorna.
+
+    Args:
+        voto_jueces: list: Lista, mi_decision: tuple: Tupla.
+    """
     color_decidido = jueces_decision(voto_jueces)
     if color_decidido == mi_decision:
         retorna = True
@@ -42,10 +47,10 @@ def comprobacion(voto_jueces: list, mi_decision: tuple):
     return retorna
 
 def porcentaje_decision(decision: list):
-    """Calcula el porcentaje de decisión de los jueces
+    """Calcula el porcentaje de decisión de los jueces.
 
     Args:
-        decision: list: Lista que contiene la decisión final  
+        decision: list: Lista que contiene la decisión final.  
     """
     contador_rojo = 0
     contador_azul = 0
