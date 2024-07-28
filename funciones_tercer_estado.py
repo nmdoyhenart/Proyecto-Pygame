@@ -9,6 +9,7 @@ from funciones_base import *
 from archivos import *
 from elementos import *
 from efectos_de_sonido import *
+from especificas_evento import *
 
 def activar_estado_tres(ventana, fuente, color_decision: str, lista_jueces: list, comodin_tres, contador_tiempo: int):
     """Lo relacionado con el tercer estado.

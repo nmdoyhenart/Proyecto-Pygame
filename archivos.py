@@ -18,7 +18,6 @@ def cargar_puntos(path):
             return aux["Puntos"]
     except FileNotFoundError:
         return []
-    
 
 def guardar_puntos(path ,puntos_existentes: list):
     """Almacena los puntos en el archivo JSON, agregando los nuevos puntos a los existentes.
@@ -26,7 +25,6 @@ def guardar_puntos(path ,puntos_existentes: list):
     Args:
         lista_puntos (list): Lista donde se encuentran los datos, cada uno siendo una tupla con un string y un entero.
     """
-   
     puntos_dict = {"Puntos": puntos_existentes}
     with open(path, "w") as archivo:
         json.dump(puntos_dict, archivo, indent=4)
@@ -58,4 +56,3 @@ def leer_preguntas(nombre_archivo: str)-> list[dict]:
             lista_leida.append(preguntas_opciones)
 
     return lista_leida
-

@@ -13,6 +13,7 @@ from funciones_segundo_estado import *
 from funciones_tercer_estado import *
 from funciones_ganar_o_perder import *
 from funciones_de_comodines import *
+from especificas_evento import *
 
 def accionar_estado_principal(ventana, fuente, eventos: list, evento, database: dict):
     """Funcion que acciona el primer estado del juego.
@@ -123,7 +124,7 @@ def accionar_tercer_estado(ventana, fuente, database: dict, fuente_porcentaje, c
         else:
             lista_jugadores.append(jugador_puntos)
             guardar_puntos("Puntos.json",lista_jugadores)
-            database = reiniciar_main(database)
+            database = reiniciar_datos(database)
             jugador_puntos = []
     
     feedback_estado_tres = {"base de datos": database,

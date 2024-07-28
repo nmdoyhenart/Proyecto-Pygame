@@ -81,7 +81,7 @@ def pantalla_eliminado(ventana, FUENTE):
     texto_eliminado = FUENTE.render(f"PERDISTE :P", False, BLANCO)
     ventana.blit(texto_eliminado, (eliminado_x + 100, eliminado_y + 60))
 
-def reiniciar_main(database: dict):
+def reiniciar_datos(database: dict):
     """Reinicia el diccionario `database`, volviendo a una version inicial.
 
     Args:

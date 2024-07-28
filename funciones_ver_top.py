@@ -56,7 +56,7 @@ def dibujar_top_5(ventana, lista_top: list, fuente):
         texto = f"{i+1}. {item[0]}  Puntos:{item[1]}"
         superficie_texto = fuente.render(texto, True, NEGRO)
         ventana.blit(superficie_texto, (titulo_superficie.x + 5, y_jugadores))
-        y_jugadores += superficie_texto + 10
+        y_jugadores += superficie_texto.get_height() + 10
 
 def top_cinco(ventana, fuente, lista_jugadores: list):
     """Aplicamos todas las funciones para el muestreo.

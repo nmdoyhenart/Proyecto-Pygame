@@ -14,7 +14,7 @@ fuente = pygame.font.Font(None, 36)
 fuente_porcentaje = pygame.font.Font(None, 30)
 bandera = True
 color_decision = None
-lista_jugadores = cargar_puntos("Puntos.json")
+puntos_de_jugadores = cargar_puntos("Puntos.json")
 preguntas = leer_preguntas("Preguntas.csv")
 puntos = [50, 100, 200, 250, 300, 400, 500, 600, 750, 1000]
 database = {"estado": "principal",
@@ -60,23 +60,24 @@ while bandera:
         tiempo_muerto = feedback_estado_dos["tiempo"]
 
     elif database["estado"] == "tercer estado":
-        feedback_estado_tres = accionar_tercer_estado(ventana, fuente, database, fuente_porcentaje, color_decision, tiempo_muerto, puntos, lista_jugadores, pregunta_aleatoria, habilitar_sonido, jugador_puntos)
+        feedback_estado_tres = accionar_tercer_estado(ventana, fuente, database, fuente_porcentaje, color_decision, tiempo_muerto, puntos, puntos_de_jugadores, pregunta_aleatoria, habilitar_sonido, jugador_puntos)
 
         database = feedback_estado_tres["base de datos"]
         pregunta_aleatoria = feedback_estado_tres["pregunta_aleatoria"]
         habilitar_sonido = feedback_estado_tres["sonido"]
 
     elif database["estado"] == "top jugadores":
-        top_cinco(ventana, fuente, lista_jugadores)
+        top_cinco(ventana, fuente, puntos_de_jugadores)
         volver = boton_vuelta(ventana, ventana_dimension, evento)
         if volver:
             database["estado"] = "principal" 
 
     elif database["estado"] == "tiempo excedido":
         fuera_de_tiempo(ventana, fuente)
-        tiempo_fuera = tiempo_espera(database, 4, lista_jugadores, jugador_puntos)
+        tiempo_fuera = tiempo_espera(database, 4, puntos_de_jugadores, jugador_puntos)
         if tiempo_fuera:
-            database = reiniciar_main(database)
+            database = reiniciar_datos(database)
 
     pygame.display.flip()
+    
 pygame.quit()
