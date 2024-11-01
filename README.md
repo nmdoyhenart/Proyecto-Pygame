@@ -2,7 +2,6 @@
 ## Segundo parcial, Nicolás Doyhenart y Santino Fernandez
 <br></br>
 **NOTA FINAL: 80/100*
-<br>
 
 ---------------------------------------------------------
 
